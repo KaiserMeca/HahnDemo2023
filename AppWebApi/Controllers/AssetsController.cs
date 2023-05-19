@@ -16,7 +16,7 @@ namespace AppWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Asset>>> GetAll()
+        public async Task<ActionResult<IEnumerable<AssetDTO>>> GetAll()
         {
             var Assets = await _services.GetAllAsync();
             if (Assets == null || !Assets.Any())
@@ -46,13 +46,26 @@ namespace AppWebApi.Controllers
             return Ok(response);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] Asset asset)
+        public async Task<IActionResult> Put(Guid id, [FromBody] AssetDTO asset)
         {
             if (!await _services.UpdateAsync(id, asset))
             {
                 return BadRequest();
             }
             return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (!await _services.DeleteAsync(id))
+            {
+                return BadRequest(new { message = "Error" });
+            }
+            else
+            {
+                return Ok(new { message = "Delete Asset" });
+            }
         }
     }
 

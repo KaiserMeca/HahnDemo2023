@@ -1,8 +1,9 @@
-﻿using Domain.Security.Agregate;
+﻿using Common.Model;
+using Domain.Security.Agregate;
 
 namespace Domain.Security
 {
-    public class AssetDTO
+    public class AssetDTO : AgregateRoot
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -2,12 +2,12 @@
 
 namespace Domain.Repositoy
 {
-    public interface IAssetRepository : IGenericRepository<Asset>
+    public interface IAssetRepository : IGenericRepository<AssetDTO>
     {
-        Task<IEnumerable<Asset>> GetAllAsync();
-        Task<Asset> GetForIdAsync(Guid id);
+        Task<IEnumerable<AssetDTO>> GetAllAsync();
+        Task<AssetDTO> GetForIdAsync(Guid id);
         Task<bool> AddAsync(AssetDTO asset);
-        Task<bool> UpdateAsync(Guid id, Asset asset);
+        Task<bool> UpdateAsync(Guid id, AssetDTO asset);
         Task<bool> DeleteAsync(Guid id);
 
         Task<bool> countryExist(string country); //aggregate query

@@ -1,5 +1,7 @@
 ﻿using Common.Model;
 using Domain.Security.Agregate;
+using Domain.Validations;
+using FluentValidation.Results;
 
 namespace Domain.Security
 {
@@ -7,7 +9,6 @@ namespace Domain.Security
     {
         protected Asset()
         {
-
         }
         public Guid Id { get; private set; }
 
@@ -49,6 +50,11 @@ namespace Domain.Security
                 AddDomainEvent(eventData);
             }
         }
+        public ValidationResult ValidateModel()
+        {
+            return new AssetValidation().Validate(this);
+        }
+
 
     }
 }

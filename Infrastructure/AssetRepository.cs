@@ -1,4 +1,5 @@
-﻿using Domain.Repositoy;
+﻿using AutoMapper;
+using Domain.Repositoy;
 using Domain.Security;
 using Domain.Security.Agregate;
 using Domain.UnitOfWork;
@@ -7,27 +8,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    internal class AssetRepository : IAssetRepository
+    public class AssetRepository : IAssetRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
+        //private readonly IUnitOfWork _unitOfWork;
         private readonly AssetContext _context;
 
-        public AssetRepository(AssetContext context, IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public AssetRepository(AssetContext context/*, IUnitOfWork unitOfWork*/, IMapper mapper)
         {
             _context = context;
-            _unitOfWork = unitOfWork;
+            //_unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task<bool> AddAsync(Asset asset)
+        public async Task<bool> AddAsync(AssetDTO assetDTO)
         {
-            if (asset == null || await _context.Assets.AnyAsync(x => x.Id == asset.Id))
+            if (assetDTO == null || await _context.Assets.AnyAsync(x => x.Id == assetDTO.Id))
             {
                 return false;
             }
             else
             {
-                await _context.Assets.AddAsync(asset);
-                await _unitOfWork.SaveAsync();
+                var assetMapper = _mapper.Map<Asset>(assetDTO);
+                await _context.Assets.AddAsync(assetMapper);
+                await _context.SaveChangesAsync();
+                //await _unitOfWork.SaveAsync();
                 return true;
             }
         }
@@ -100,7 +106,7 @@ namespace Infrastructure
                 }
                 // Mark domain events as confirmed
                 asset.MarkDomainEventsAsCommitted();
-                await _unitOfWork.SaveAsync();
+                //await _unitOfWork.SaveAsync();
                 return true;
             }
         }

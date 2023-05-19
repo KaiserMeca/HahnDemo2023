@@ -6,7 +6,7 @@ namespace Domain.Repositoy
     {
         Task<IEnumerable<Asset>> GetAllAsync();
         Task<Asset> GetForIdAsync(Guid id);
-        Task<bool> AddAsync(Asset asset);
+        Task<bool> AddAsync(AssetDTO asset);
         Task<bool> UpdateAsync(Guid id, Asset asset);
         Task<bool> DeleteAsync(Guid id);
 

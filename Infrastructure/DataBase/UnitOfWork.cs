@@ -1,5 +1,8 @@
-﻿using Domain.Repositoy;
+﻿using AutoMapper;
+using Domain.Repositoy;
 using Domain.UnitOfWork;
+using Infrastructure;
+
 
 namespace Infrastructure.DataBase
 {
@@ -8,16 +11,18 @@ namespace Infrastructure.DataBase
         private AssetContext _context;
         private IAssetRepository? _assetRepository;
         private bool _hasError;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the UnitOfWork class with the specified context and logger.
         /// </summary>
         /// <param name="context">The AssetContext to be used by the UnitOfWork.</param>
         /// <param name="logger">The ILogger to be used by the UnitOfWork.</param>
-        public UnitOfWork(AssetContext context)
+        public UnitOfWork(AssetContext context, IMapper mapper)
         {
             _context = context;
             _hasError = false;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -27,7 +32,7 @@ namespace Infrastructure.DataBase
         {
             get
             {
-                return _assetRepository = _assetRepository ?? new AssetRepository(_context);
+                return _assetRepository = _assetRepository ?? new AssetRepository(_context, _mapper);
             }
         }
 

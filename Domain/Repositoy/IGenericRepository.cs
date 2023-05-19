@@ -7,7 +7,7 @@ namespace Domain.Repositoy
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetForIdAsync(Guid id);
-        Task<bool> AddAsync(Asset asset);
+        Task<bool> AddAsync(AssetDTO asset);
         Task<bool> UpdateAsync(Guid id, T asset);
         Task<bool> DeleteAsync(Guid id);
     }

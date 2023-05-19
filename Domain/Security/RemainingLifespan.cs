@@ -4,11 +4,11 @@ namespace Domain.Security
 {
     public class RemainingLifespan : IDomainEntity
     {
+        public Guid Id { get; private set; }
         public DateTime PurchaseDate { get; private set; }
-
         public int Lifespan { get; private set; }
 
-        protected RemainingLifespan()
+        public RemainingLifespan()
         {
 
         }

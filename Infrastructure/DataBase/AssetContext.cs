@@ -20,6 +20,7 @@ namespace Infrastructure.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<RemainingLifespan>(o => o.HasKey(x => x.Id));
             modelBuilder.Entity<Asset>(o => o.HasKey(x => x.Id));
             ; base.OnModelCreating(modelBuilder);
         }

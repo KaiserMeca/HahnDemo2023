@@ -22,6 +22,8 @@ namespace Domain.Security
         public int Lifespan { get; private set; }
 
         public State state { get; private set; }
+
+        public RemainingLifespan RemainingLifespan { get; private set; }    
        
         public static Asset CreateNew(string name, Department department, string departmentMail, DateTime purchaseDate, int lifespan)
         {
@@ -36,6 +38,16 @@ namespace Domain.Security
                 state = State.healthy
             };
             return asset;
+        }
+
+        public void ApplyUpdateAssetData(UpdateAssetData eventData)
+        {
+            if (Name != eventData.Name || DepartmentMail != eventData.DepartmentMail)
+            {
+                Name = eventData.Name;
+                DepartmentMail = eventData.DepartmentMail;
+                AddDomainEvent(eventData);
+            }
         }
 
     }

@@ -1,5 +1,6 @@
-﻿using Domain.Repositoy;
+﻿using Domain.InterfacesServices;
 using Domain.Security;
+using Domain.Validations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppWebApi.Controllers
@@ -8,9 +9,9 @@ namespace AppWebApi.Controllers
     [ApiController]
     public class AssetsController : ControllerBase
     {
-        private readonly IAssetRepository _services;
+        private readonly IAssetService _services;
 
-        public AssetsController(IAssetRepository services)
+        public AssetsController(IAssetService services)
         {
             _services = services;
         }
@@ -30,7 +31,7 @@ namespace AppWebApi.Controllers
         {
             if (!await _services.AddAsync(asset))
             {
-                return BadRequest(new { message = "Error" });
+                return BadRequest(new { message = "Validation Error", errors = AssetValidation.errors });
             }
             else
             {

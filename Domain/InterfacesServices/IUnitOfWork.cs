@@ -1,6 +1,6 @@
 ﻿using Domain.Repositoy;
 
-namespace Domain.UnitOfWork
+namespace Domain.InterfacesServices
 {
     public interface IUnitOfWork
     {

@@ -3,11 +3,11 @@ namespace Common.Model
 {
     public abstract class AgregateRoot : IEventProvider
     {
-        private readonly List<IDomainEvent> _domainEvents;
+        private static List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
 
         protected AgregateRoot()
         {
-            _domainEvents = new List<IDomainEvent>();
+            
         }
 
         public IEnumerable<IDomainEvent> GetUncommittedDomainEvents()

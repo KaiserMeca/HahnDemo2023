@@ -1,5 +1,6 @@
 ﻿using Common.Model;
 using Domain.Security.Agregate;
+using Domain.Security.Agregate.Events;
 using Domain.Validations;
 using FluentValidation.Results;
 
@@ -9,6 +10,7 @@ namespace Domain.Security
     {
         protected Asset()
         {
+            
         }
         public Guid Id { get; private set; }
 
@@ -41,20 +43,23 @@ namespace Domain.Security
             return asset;
         }
 
+        public new void AddEvent(IDomainEvent eve)
+        {
+            AddDomainEvent(eve);
+        }
+
         public void ApplyUpdateAssetData(UpdateAssetData eventData)
         {
             if (Name != eventData.Name || DepartmentMail != eventData.DepartmentMail)
             {
                 Name = eventData.Name;
                 DepartmentMail = eventData.DepartmentMail;
-                AddDomainEvent(eventData);
+                //AddDomainEvent(eventData);
             }
         }
         public ValidationResult ValidateModel()
         {
             return new AssetValidation().Validate(this);
         }
-
-
     }
 }

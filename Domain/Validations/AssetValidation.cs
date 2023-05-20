@@ -1,10 +1,14 @@
 ﻿using Domain.Security;
 using FluentValidation;
+using FluentValidation.Results;
+using System.Collections.Generic;
 
 namespace Domain.Validations
 {
     public class AssetValidation : AbstractValidator<Asset>
     {
+        public static List<string> errors = new List<string>();
+
         public AssetValidation()
         {
             RuleFor(x => x.Name)
@@ -33,6 +37,25 @@ namespace Domain.Validations
             else
             {
                 return false;
+            }
+        }
+
+        public static List<string> ValidateOk(Asset asset)
+        {
+            
+            ValidationResult validationResults = asset.ValidateModel();
+            if (!validationResults.IsValid)
+            {
+                foreach (var failure in validationResults.Errors)
+                {
+                    errors.Add(failure.ErrorMessage);
+                }
+
+                return errors;
+            }
+            else
+            {
+                return errors;
             }
         }
     }

@@ -1,10 +1,11 @@
 using Domain.Repositoy;
-using Domain.UnitOfWork;
 using Infrastructure.DataBase;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Domain.Security.Agregate;
+using Domain.InterfacesServices;
+using Infrastructure.Services;
 
 namespace AppWebApi
 {
@@ -21,6 +22,7 @@ namespace AppWebApi
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAssetRepository, AssetRepository>();
+            builder.Services.AddScoped<IAssetService, AssetServices>();
 
             //Mapper
             var mapConfig = new MapperConfiguration(m =>

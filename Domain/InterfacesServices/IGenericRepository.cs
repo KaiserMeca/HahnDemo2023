@@ -1,7 +1,7 @@
-﻿using Common.Model;
-using Domain.Security;
+﻿using Domain.Assets;
+using Shared.Model;
 
-namespace Domain.Repositoy
+namespace Domain.InterfacesServices
 {
     public interface IGenericRepository<T> where T : AgregateRoot
     {

@@ -1,7 +1,6 @@
-﻿using Domain.Security;
+﻿using Domain.Assets;
 using FluentValidation;
 using FluentValidation.Results;
-using System.Collections.Generic;
 
 namespace Domain.Validations
 {

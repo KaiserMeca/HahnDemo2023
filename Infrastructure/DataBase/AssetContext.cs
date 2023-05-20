@@ -1,4 +1,4 @@
-﻿using Domain.Security;
+﻿using Domain.Assets;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataBase

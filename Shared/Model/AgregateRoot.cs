@@ -1,5 +1,5 @@
 ﻿
-namespace Common.Model
+namespace Shared.Model
 {
     public abstract class AgregateRoot : IEventProvider
     {

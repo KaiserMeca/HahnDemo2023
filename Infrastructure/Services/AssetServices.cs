@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Domain.InterfacesServices;
-using Domain.Repositoy;
-using Domain.Security;
-using Domain.Security.Agregate.Events;
+using Domain.Assets;
+using Domain.Assets.Aggregates.Events;
 using Domain.Validations;
-using FluentValidation.Results;
 
 namespace Infrastructure.Services
 {

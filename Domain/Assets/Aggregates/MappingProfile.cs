@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Domain.Security.Agregate
+namespace Domain.Assets.Aggregates
 {
     public class MappingProfile : Profile
     {

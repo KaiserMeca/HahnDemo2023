@@ -1,4 +1,4 @@
-﻿namespace Common.Model
+﻿namespace Shared.Model
 {
     public abstract class ValueObject
     {

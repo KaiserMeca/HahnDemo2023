@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Common.Model
+namespace Shared.Model
 {
     public interface IGenericRepository<T> where T : AgregateRoot
     {

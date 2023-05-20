@@ -1,10 +1,10 @@
-﻿using Common.Model;
-using Domain.Security.Agregate;
-using Domain.Security.Agregate.Events;
+﻿using Shared.Model;
+using Domain.Assets.Aggregates;
+using Domain.Assets.Aggregates.Events;
 using Domain.Validations;
 using FluentValidation.Results;
 
-namespace Domain.Security
+namespace Domain.Assets
 {
     public class Asset : AgregateRoot, IDomainEntity
     {

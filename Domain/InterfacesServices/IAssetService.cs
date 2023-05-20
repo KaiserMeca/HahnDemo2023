@@ -1,4 +1,4 @@
-﻿using Domain.Security;
+﻿using Domain.Assets;
 
 namespace Domain.InterfacesServices
 {

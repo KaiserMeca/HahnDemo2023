@@ -1,7 +1,6 @@
 ﻿using Domain.InterfacesServices;
-using Domain.Repositoy;
-using Domain.Security;
-using Domain.Security.Agregate.Events;
+using Domain.Assets;
+using Domain.Assets.Aggregates.Events;
 using Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,6 +1,6 @@
-﻿using Common.Model;
+﻿using Shared.Model;
 
-namespace Domain.Security.Agregate.Events
+namespace Domain.Assets.Aggregates.Events
 {
     public class UpdateAssetData : IDomainEvent
     {

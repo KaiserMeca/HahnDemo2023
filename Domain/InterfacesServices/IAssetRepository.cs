@@ -1,6 +1,6 @@
-﻿using Domain.Security;
+﻿using Domain.Assets;
 
-namespace Domain.Repositoy
+namespace Domain.InterfacesServices
 {
     public interface IAssetRepository : IGenericRepository<Asset>
     {

@@ -1,6 +1,6 @@
-﻿using Common.Model;
+﻿using Shared.Model;
 
-namespace Domain.Security
+namespace Domain.Assets
 {
     public class RemainingLifespan : IDomainEntity
     {
@@ -8,10 +8,10 @@ namespace Domain.Security
         public DateTime PurchaseDate { get; private set; }
         public int Lifespan { get; private set; }
 
-        public RemainingLifespan()
-        {
+        //public RemainingLifespan()
+        //{
 
-        }
+        //}
         public static DateTime CreateNew(DateTime purchaseDate, int lifespan)
         {
             DateTime expirationDate = purchaseDate.AddYears(lifespan);

@@ -24,7 +24,7 @@ namespace Domain.Security
 
         public int Lifespan { get; private set; }
 
-        public State state { get; private set; }
+        public State State { get; private set; }
 
         public RemainingLifespan RemainingLifespan { get; private set; }    
        
@@ -32,13 +32,13 @@ namespace Domain.Security
         {
             Asset asset = new Asset()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Name = name,
                 Department = department,
                 DepartmentMail = departmentMail,
                 PurchaseDate = purchaseDate,
                 Lifespan = lifespan,
-                state = State.healthy
+                State = State.healthy
             };
             return asset;
         }
@@ -54,7 +54,6 @@ namespace Domain.Security
             {
                 Name = eventData.Name;
                 DepartmentMail = eventData.DepartmentMail;
-                //AddDomainEvent(eventData);
             }
         }
         public ValidationResult ValidateModel()

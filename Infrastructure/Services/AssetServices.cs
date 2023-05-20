@@ -51,12 +51,17 @@ namespace Infrastructure.Services
         public async Task<bool> UpdateAsync(Guid id, AssetDTO assetDTO)
         {
             var asset = _mapper.Map<Asset>(assetDTO);
-            ValidationResult validationResults = asset.ValidateModel();
-
-            //Add DomainEvent
-            UpdateAssetData updateAsset = new UpdateAssetData();
-            asset.AddEvent(updateAsset);
-            return await _repository.UpdateAsync(id,asset);
+            if (AssetValidation.ValidateOk(asset).Count == 0)
+            {
+                //Add DomainEvent
+                UpdateAssetData updateAsset = new UpdateAssetData();
+                asset.AddEvent(updateAsset);
+                return await _repository.UpdateAsync(id, asset);
+            }
+            else
+            {
+                return await Task.FromResult(false);
+            }
         }
 
         public async Task<bool> DeleteAsync(Guid id)

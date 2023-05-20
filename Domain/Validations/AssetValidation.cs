@@ -11,6 +11,7 @@ namespace Domain.Validations
 
         public AssetValidation()
         {
+            errors.Clear();
             RuleFor(x => x.Name)
                 .MinimumLength(5)
                 .WithMessage("The field cannot be less than 5 characters");
@@ -55,7 +56,7 @@ namespace Domain.Validations
             }
             else
             {
-                return errors;
+                return errors;//return empty List
             }
         }
     }

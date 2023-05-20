@@ -43,17 +43,30 @@ namespace AppWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsset(Guid id)
         {
-            var response = await _services.GetForIdAsync(id);
-            return Ok(response);
+            var asset = await _services.GetForIdAsync(id); ;
+            if (asset == null)
+            {
+                return BadRequest(new { message = "The asset does not exist" });
+            }
+            else
+            {
+                return Ok(asset);
+            }
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] AssetDTO asset)
         {
             if (!await _services.UpdateAsync(id, asset))
             {
-                return BadRequest();
+                return BadRequest(new { message = "The asset could not be updated"
+                , errors = AssetValidation.errors
+                });
             }
-            return Ok();
+            else
+            {
+                return Ok(new { message = "Asset updated" });
+            }
         }
 
         [HttpDelete("{id}")]
@@ -61,7 +74,7 @@ namespace AppWebApi.Controllers
         {
             if (!await _services.DeleteAsync(id))
             {
-                return BadRequest(new { message = "Error" });
+                return BadRequest(new { message = "The asset you are trying to delete was not found in the database" });
             }
             else
             {

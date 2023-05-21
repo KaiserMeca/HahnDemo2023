@@ -17,7 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Application", "4.Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppWebApi", "AppWebApi\AppWebApi.csproj", "{A50B6556-E3AF-4175-A0C9-292E16A1C30A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{BD2F94E2-10E7-4D61-9305-6DB4482FBDD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{BD2F94E2-10E7-4D61-9305-6DB4482FBDD8}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "AppFront", "AppFront\AppFront.esproj", "{D61D3197-6D17-43B5-8DBA-A0A3DE7EF6BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,12 @@ Global
 		{BD2F94E2-10E7-4D61-9305-6DB4482FBDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD2F94E2-10E7-4D61-9305-6DB4482FBDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD2F94E2-10E7-4D61-9305-6DB4482FBDD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D61D3197-6D17-43B5-8DBA-A0A3DE7EF6BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D61D3197-6D17-43B5-8DBA-A0A3DE7EF6BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D61D3197-6D17-43B5-8DBA-A0A3DE7EF6BE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D61D3197-6D17-43B5-8DBA-A0A3DE7EF6BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D61D3197-6D17-43B5-8DBA-A0A3DE7EF6BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D61D3197-6D17-43B5-8DBA-A0A3DE7EF6BE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

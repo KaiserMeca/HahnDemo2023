@@ -33,7 +33,19 @@ namespace AppWebApi
             IMapper mapper = mapConfig.CreateMapper();
             builder.Services.AddSingleton(mapper);
 
-            builder.Services.AddControllers();
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(builder =>
+            //    {
+            //        builder.AllowAnyOrigin()
+            //               .AllowAnyMethod()
+            //               .AllowAnyHeader();
+            //    });
+            //});
+            builder.Services.AddCors(options => options.AddPolicy("AllowWebApp",
+                builder => builder.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -55,6 +67,10 @@ namespace AppWebApi
 
             builder.Services.AddSwaggerGen();
 
+            
+
+            
+
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
@@ -69,6 +85,8 @@ namespace AppWebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("AllowWebApp");
 
             app.UseHttpsRedirection();
 

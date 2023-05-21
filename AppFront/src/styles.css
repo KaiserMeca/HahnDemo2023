@@ -1,0 +1,32 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  /*background: #2193b0; /* fallback for old browsers
+  background: -webkit-linear-gradient(to right, #6dd5ed, #2193b0); /* Chrome 10-25, Safari 5.1-6
+  background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-image: url("../src/assets/fondohann.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.card {
+  /*background-image : url("../src/assets/fondohann.png");*/
+  /*background-color: lightgray;*/
+  font-family: 'Barlow', sans-serif;
+}
+/*.title {
+  font-weight:500;
+}
+.labelText{
+    font-weight:400;
+}*/
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: unset;
+  min-height: 100vh;
+}

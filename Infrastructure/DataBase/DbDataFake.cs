@@ -36,13 +36,20 @@ namespace Infrastructure.DataBase
                     Domain.Assets.Aggregates.Department.Store3,
                     "mail2@department2.com",
                     DateTime.UtcNow.Date.AddDays(-random.Next(1, 365)),
-                    2
+                    3
+                ),
+                Asset.CreateNew(
+                    "Headphones",
+                    Domain.Assets.Aggregates.Department.Store1,
+                    "mail3@department3.com",
+                    DateTime.UtcNow.Date.AddDays(-382),
+                    1
                 ),
                 Asset.CreateNew(
                     "Mouse",
                     Domain.Assets.Aggregates.Department.MaintenanceStation,
-                    "mail3@department3.com",
-                    DateTime.UtcNow.Date.AddDays(-random.Next(1, 365)),
+                    "mail4@department4.com",
+                    DateTime.UtcNow.Date.AddDays(-635),
                     2
                 )};
 

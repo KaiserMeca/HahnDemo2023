@@ -26,7 +26,7 @@ namespace Domain.Assets
 
         public State State { get; private set; }
 
-        public RemainingLifespan RemainingLifespan { get; private set; }    
+        public RemainingLifespan RemainingLifespan { get; set; }    
        
         public static Asset CreateNew(string name, Department department, string departmentMail, DateTime purchaseDate, int lifespan)
         {

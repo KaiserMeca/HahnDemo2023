@@ -21,6 +21,12 @@ namespace Infrastructure.Services
         public async Task<IEnumerable<AssetDTO>> GetAllAsync()
         {
             var assetsList = await _repository.GetAllAsync();
+           
+            foreach (var item in assetsList)
+            {
+                item.RemainingLifespan = RemainingLifespan.CreateNew(item.PurchaseDate, item.Lifespan);
+            }
+
             var ListAssetDTOs = _mapper.Map<IEnumerable<AssetDTO>>(assetsList);
             return ListAssetDTOs;
         }
@@ -28,9 +34,9 @@ namespace Infrastructure.Services
         public async Task<AssetDTO> GetForIdAsync(Guid id)
         {
             var asset = await _repository.GetForIdAsync(id);
+            asset.RemainingLifespan = RemainingLifespan.CreateNew(asset.PurchaseDate, asset.Lifespan);
             AssetDTO assetDTO = _mapper.Map<AssetDTO>(asset);
             return assetDTO;
-
         }
 
         public Task<bool> AddAsync(AssetDTO assetDTO)

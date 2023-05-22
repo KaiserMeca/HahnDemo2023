@@ -2,112 +2,98 @@
   <div class="col-lg-10">
     <div class="card" style="margin: 30px;">
       <div class="card-body">
-        <!-- Title -->
-        <h6 class="title text-center" style="font-weight: 600" *ngIf="!ViewEditButton">{{'CreateAsset' | translate}}</h6>
-        <h6 class="title text-center" style="font-weight: 600" *ngIf="ViewEditButton">
-          {{'EditAssetTitle' | translate}} &nbsp;&nbsp;
-          <i class="fa-solid fa-pen-to-square text-primary"></i>
-        </h6>
+        <div class="row">
+          <div class="col-12">
+            <!-- Title -->
+            <h6 class="title text-center" style="font-weight: 600" *ngIf="!ViewEditButton">{{'CreateAsset' | translate}}</h6>
+            <h6 class="title text-center" style="font-weight: 600" *ngIf="ViewEditButton">
+              {{'EditAssetTitle' | translate}} &nbsp;&nbsp;
+              <i class="fa-solid fa-pen-to-square text-primary"></i>
+            </h6>
+          </div>
+        </div>
         <app-loading class="center" *ngIf="loading"></app-loading>
-        <!-- Asset Name -->
-        <div class="form-control-sm">
-          <label class="form-label">{{'AssetName' | translate}}</label>
-          <input formControlName="assetName" class="form-control" placeholder="{{'Name' | translate}}"
-                 [ngClass]="{'input-error': register.get('assetName')?.invalid && register.get('assetName')?.touched }">
-          <span class="text-danger ml-2" *ngIf="register.get('assetName')?.hasError('required') && register.get('assetName')?.touched" [innerHTML]="'ValidatorName1' | translate"></span>
-          <span class="text-danger" *ngIf="register.get('assetName')?.hasError('minlength') && register.get('assetName')?.touched" [innerHTML]="'ValidatorName2' | translate"></span>
-        </div>
-        <!-- Asset Departments -->
-        <div class="row form-control-sm">
-          <div class="col">
-            <label class="form-label">{{'Department' | translate}}</label>
-            <label class="text-danger">&nbsp;&nbsp;&nbsp;{{departmentEdit}}</label>
-            <select class="form-select" formControlName="department" [(ngModel)]="selectedValue">
-              <option value="0">HQ</option>
-              <option value="1">Store1</option>
-              <option value="2">Store2</option>
-              <option value="3">Store3</option>
-              <option value="4">MaintenanceStation</option>
-            </select>
-            <span class="text-danger" *ngIf="register.get('department')?.hasError('required') && register.get('department')?.touched" [innerHTML]="'ValidatorDpto' | translate"></span>
-          </div>
-          <!--Departament mail-->
-          <div class="col">
-            <label class="form-label">{{'DepartamentMail' | translate}}</label>
-            <input type="email" class="form-control" placeholder="{{'PlaceholderMail' | translate}}" formControlName="EMailAdressOfDepartment"
-                   [ngClass]="{'input-error': inputInvalidEmail()}">
-
-            <span class="text-danger" *ngIf="register.get('EMailAdressOfDepartment')?.hasError('required')
-          && register.get('EMailAdressOfDepartment')?.touched" [innerHTML]="'ValidatorMail1' | translate"></span>
-            <span class="text-danger" *ngIf="register.get('EMailAdressOfDepartment')?.hasError('email')
-          && register.get('EMailAdressOfDepartment')?.touched" [innerHTML]="'ValidatorMail2' | translate"></span>
-          </div>
-        <!--</div>-->
-        <!--Coutry-->
-        <!--<div class="row form-control-sm">
-          <div class="col">
-            <div class="d-flex align-items-center spinner-grow-sm">
-              <label class="form-label" style="margin-right: 10px; margin: 2px">{{'Country' | translate}}</label>
-              <div *ngIf="loadingCountry" class="text-danger text-center">
-                &nbsp;&nbsp;{{'ValidateCountry1' | translate}}
-                <div class="spinner-border spinner-border-sm text-primary ms-auto" role="status">
-                  <span class="visually-hidden"> </span>
-                </div>
-              </div>
+        <div class="row">
+          <div class="col-12 form-control-sm">
+            <!-- Asset Name -->
+            <div class="form-group">
+              <label class="form-label">{{'AssetName' | translate}}</label>
+              <input formControlName="assetName" class="form-control" placeholder="{{'Name' | translate}}"
+                     [ngClass]="{'input-error': register.get('assetName')?.invalid && register.get('assetName')?.touched }">
+              <span class="text-danger ml-2" *ngIf="register.get('assetName')?.hasError('required') && register.get('assetName')?.touched" [innerHTML]="'ValidatorName1' | translate"></span>
+              <span class="text-danger" *ngIf="register.get('assetName')?.hasError('minlength') && register.get('assetName')?.touched" [innerHTML]="'ValidatorName2' | translate"></span>
             </div>
-            <input type="text" class="form-control" placeholder="{{'Country' | translate}}" formControlName="countryOfDepartment">--><!--(blur)="onCountry()" [ngClass]="{'input-error': inputInvalidCoutry()}"-->
-            <!--<span class="text-danger ml-2" *ngIf="register.get('countryOfDepartment')?.hasError('required')&& register.get('countryOfDepartment')?.touched" [innerHTML]="'ValidateCountry2' | translate"></span>
-            <span class="text-danger ml-2" *ngIf="validCountry"><strong>{{validCountry}}</strong></span>
-          </div>-->
-          <!--Purchase Date-->
-          <div class="col">
-            <label class="form-label">{{'PurchaseDate' | translate}}</label>
-            <input type="date" class="form-control" placeholder="date" formControlName="PurchaseDate" (change)="onPurchaseDateBlur()"
-                   [ngClass]="{'input-error': inputInvalidPurchaseDate()}">
-            <span *ngIf="purchaseDateError" class="text-danger ml-2">{{ purchaseDateError }}</span>
           </div>
         </div>
-        <!--LifeSpan-->
-        <div class="form-control-sm">
-          <div class="col">
-            <label class="form-label">{{'Broken' | translate}}</label>
-            <input type="number" class="form-control" placeholder="{{'PlaceholderLifeSpan' | translate}}" formControlName="LifeSpan"
-            [ngClass]="{'input-error': inputInvalidLifeSpan()}"></div>
-        </div>
-          <!--Buttons-->
-          <div class="row">
-            <button class="btn btn-secondary col" type="button" style="margin:10px" data-bs-toggle="modal" data-bs-target="#resetModal"
-                    *ngIf="!ViewEditButton" [disabled]="register.invalid">
-              <i class="fa-solid fa-rotate-right"></i>&nbsp;{{'Reset' | translate}}
-            </button>
-            <button class="btn btn-secondary col" type="reset" style="margin:10px" *ngIf="ViewEditButton" (click)="cancelEdit()">
-              <i class="fa-solid fa-ban"></i>&nbsp;{{'Cancel' | translate}}
-            </button>
-            <button class="btn btn-primary col" type="submit" style="margin:10px" [disabled]="register.invalid" *ngIf="!ViewEditButton">
-              <i class="fas fa-database"></i>&nbsp;{{'Send' | translate}}
-            </button>
-            <button class="btn btn-primary col" type="button" (click)="PutAsset()" style="margin:10px" [disabled]="register.invalid" *ngIf="ViewEditButton">
-              <i class="fas fa-regular fa-floppy-disk"></i>&nbsp;{{'Save' | translate}}
-            </button>
+        <div class="row">
+          <div class="col-6 form-control-sm">
+            <!-- Asset Departments -->
+            <div class="form-group">
+              <label class="form-label">{{'Department' | translate}}</label>
+              <label class="text-danger">&nbsp;&nbsp;&nbsp;{{departmentEdit}}</label>
+              <select class="form-select" formControlName="department" [(ngModel)]="selectedValue">
+                <option value="0">HQ</option>
+                <option value="1">Store1</option>
+                <option value="2">Store2</option>
+                <option value="3">Store3</option>
+                <option value="4">MaintenanceStation</option>
+              </select>
+              <span class="text-danger" *ngIf="register.get('department')?.hasError('required') && register.get('department')?.touched" [innerHTML]="'ValidatorDpto' | translate"></span>
+            </div>
+          </div>
+          <div class="col-6 form-control-sm">
+            <!-- Departament mail -->
+            <div class="form-group">
+              <label class="form-label">{{'DepartamentMail' | translate}}</label>
+              <input type="email" class="form-control" placeholder="{{'PlaceholderMail' | translate}}" formControlName="EMailAdressOfDepartment"
+                     [ngClass]="{'input-error': inputInvalidEmail()}">
+              <span class="text-danger" *ngIf="register.get('EMailAdressOfDepartment')?.hasError('required')
+              && register.get('EMailAdressOfDepartment')?.touched" [innerHTML]="'ValidatorMail1' | translate"></span>
+              <span class="text-danger" *ngIf="register.get('EMailAdressOfDepartment')?.hasError('email')
+              && register.get('EMailAdressOfDepartment')?.touched" [innerHTML]="'ValidatorMail2' | translate"></span>
+            </div>
           </div>
         </div>
-        <!--Modal-->
-        <div class="modal fade" id="resetModal" data-bs-backdrop="static"
-             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title fs-6" style="font-weight:bold" id="staticBackdropLabel">{{'ResetModalTitle' | translate}}</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-footer fs-6">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Cancel' | translate}}</button>
-                <button type="reset" class="btn btn-primary" data-bs-dismiss="modal" (click)="Reset()">{{'Confirm' | translate}}</button>
-              </div>
+        <div class="row">
+          <div class="col-6 form-control-sm">
+            <!-- Purchase Date -->
+            <div class="form-group">
+              <label class="form-label">{{'PurchaseDate' | translate}}</label>
+              <input type="date" class="form-control" placeholder="date" formControlName="PurchaseDate" (change)="onPurchaseDateBlur()"
+                     [ngClass]="{'input-error': inputInvalidPurchaseDate()}">
+              <span *ngIf="purchaseDateError" class="text-danger ml-2">{{ purchaseDateError }}</span>
+            </div>
+          </div>
+          <div class="col-6 form-control-sm">
+            <!-- LifeSpan -->
+            <div class="form-group">
+              <label class="form-label">{{'LifeSpan' | translate}}</label>
+              <input type="number" class="form-control" placeholder="{{'PlaceholderLifeSpan' | translate}}" formControlName="LifeSpan"
+                     [ngClass]="{'input-error': inputInvalidLifeSpan()}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <!-- Buttons -->
+            <div class="d-flex justify-content-center" style="margin-top:20px">
+              <button class="btn btn-secondary col-6 col-md-3 col-lg-6" type="button" style="margin:10px" data-bs-toggle="modal" data-bs-target="#resetModal"
+                      *ngIf="!ViewEditButton" [disabled]="register.invalid">
+                <i class="fa-solid fa-rotate-right"></i>&nbsp;{{'Reset' | translate}}
+              </button>
+              <button class="btn btn-secondary col-6 col-md-3 col-lg-6" type="reset" style="margin:10px" *ngIf="ViewEditButton" (click)="cancelEdit()">
+                <i class="fa-solid fa-ban"></i>&nbsp;{{'Cancel' | translate}}
+              </button>
+              <button class="btn btn-primary col-6 col-md-3 col-lg-6" type="submit" style="margin:10px" [disabled]="register.invalid" *ngIf="!ViewEditButton">
+                <i class="fas fa-database"></i>&nbsp;{{'Send' | translate}}
+              </button>
+              <button class="btn btn-primary col-6 col-md-3 col-lg-6" type="button" (click)="PutAsset()" style="margin:10px" [disabled]="register.invalid" *ngIf="ViewEditButton">
+                <i class="fas fa-regular fa-floppy-disk"></i>&nbsp;{{'Save' | translate}}
+              </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </form>
-

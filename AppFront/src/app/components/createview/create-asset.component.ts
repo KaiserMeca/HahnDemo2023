@@ -154,6 +154,7 @@ export class CreateAssetComponent implements OnInit {
 
     this._AssetServices.putAsset(this.IdForEdit, asset).subscribe(data => {
       this.toastr.info(data.message);
+
       this.ViewEditButton = false;
       this.router.navigate(["/app-assets-list"]);
     }, error => {

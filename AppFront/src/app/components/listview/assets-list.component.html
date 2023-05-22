@@ -1,61 +1,65 @@
 <div class="mt-4">
-  <div class="col-lg-10 container">
-    <div class="card" style="margin-block-start: 30px">
-      <div class="card-body">
-        <h6 class="title text-center" style="margin-bottom: 20px; font-weight:600">{{'AssetsList' | translate}}</h6>
-        <div class="nav-link" style="display: flex; justify-content: flex-end">
-          <i class="fa-solid fa-circle-plus fa-lg text-primary"
-             style="cursor: pointer; margin-bottom: 10px; margin-right: 5px" routerLink="/app-create-asset"></i>
-        </div>
-        <div>
-          <table class="table" style="font-size:90%" >
-            <thead>
-              <tr>
-                <th>{{'AssetName' | translate}}</th>
-                <th>{{'Department' | translate}}</th>
-                <!--<th>{{'Country' | translate}}</th>-->
-                <th>{{'DepartamentMail' | translate}}</th>
-                <th>{{'PurchaseDate' | translate}}</th>
-                <th>{{'Broken' | translate}}</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let Asset of AssetsList">
-                <td>{{Asset.name}}</td>
-                <td>{{ getDepartment(Asset.department)}}</td>
-                <!--<td>{{Asset.countryOfDepartment}}</td>-->
-                <td>{{Asset.departmentMail}}</td>
-                <td>{{Asset.purchaseDate}}</td>
-                <td>{{Asset.lifespan}}</td>
-                <td><i class="fa-solid fa-pen text-primary" style="cursor: pointer" (click)="Edit(Asset)"></i></td>
-                <td>
-                  <i class="fa-sharp fa-solid fa-trash text-danger"
-                     style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#resetModal"
-                     (click)="GetId(Asset.id, Asset.name)"></i><!--modificado-->
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <!--Modal-->
-          <div class="modal fade" id="resetModal" data-bs-backdrop="static"
-               data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-6" style="font-weight:bold"
-                      id="staticBackdropLabel">
-                    {{'DeleteModal' | translate:{selectName} }}
-                  </h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-footer fs-6">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Cancel' | translate}}</button>
-                  <button type="reset" class="btn btn-primary" data-bs-dismiss="modal"
-                          (click)="DeleteAsset()">
-                    {{'Confirm' | translate}}
-                  </button>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-14">
+        <div class="card" style="margin-block-start: 30px">
+          <div class="card-body">
+            <h6 class="title text-center" style="margin-bottom: 20px; font-weight:600">{{'AssetsList' | translate}}</h6>
+            <div class="nav-link d-flex justify-content-end">
+              <i class="fa-solid fa-circle-plus fa-lg text-primary"
+                 style="cursor: pointer; margin-bottom: 10px; margin-right: 5px" routerLink="/app-create-asset"></i>
+            </div>
+            <div>
+              <table class="table" style="font-size:90%">
+                <thead>
+                  <tr>
+                    <th>{{'AssetName' | translate}}</th>
+                    <th>{{'Department' | translate}}</th>
+                    <!--<th>{{'Country' | translate}}</th>-->
+                    <th>{{'DepartamentMail' | translate}}</th>
+                    <th>{{'PurchaseDate' | translate}}</th>
+                    <th>{{'LifeSpan' | translate}}</th>
+                    <th>{{'LifeSapan' | translate}}</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let Asset of AssetsList">
+                    <td>{{Asset.name}}</td>
+                    <td>{{ getDepartment(Asset.department)}}</td>
+                    <!--<td>{{Asset.countryOfDepartment}}</td>-->
+                    <td>{{Asset.departmentMail}}</td>
+                    <td>{{Asset.purchaseDate}}</td>
+                    <td>{{Asset.lifespan}}</td>
+                    <td>{{ getRemainingDuration(Asset) }}</td>
+                    <td><i class="fa-solid fa-pen text-primary" style="cursor: pointer" (click)="Edit(Asset)"></i></td>
+                    <td>
+                      <i class="fa-sharp fa-solid fa-trash text-danger"
+                         style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#resetModal"
+                         (click)="GetId(Asset.id, Asset.name)"></i><!--modificado-->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--Modal-->
+              <div class="modal fade" id="resetModal" data-bs-backdrop="static"
+                   data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-6" style="font-weight:bold" id="staticBackdropLabel">
+                        {{'DeleteModal' | translate:{selectName} }}
+                      </h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer fs-6">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Cancel' | translate}}</button>
+                      <button type="reset" class="btn btn-primary" data-bs-dismiss="modal" (click)="DeleteAsset()">
+                        {{'Confirm' | translate}}
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

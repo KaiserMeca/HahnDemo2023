@@ -45,6 +45,12 @@ export class AssetsListComponent implements OnInit {
     this.sharedData.changeAssetData(asset);
     this.router.navigate(["/app-create-asset"]);
   }
+  getRemainingDuration(asset: any): string {
+    if (asset.remainingLifespan && asset.remainingLifespan.remainingDuration) {
+      return asset.remainingLifespan.remainingDuration;
+    }
+    return '';
+  }
 
   getDepartment(dpto: number): string {
     switch (dpto) {

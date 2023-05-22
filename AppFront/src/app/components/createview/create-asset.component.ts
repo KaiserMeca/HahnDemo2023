@@ -7,6 +7,7 @@ import { AssetServiceService } from 'src/app/services/webservices/asset-service.
 import { IAsset } from 'src/app/services/interfaces/model/IAsset';
 import { ICreateServices } from 'src/app/services/interfaces/ICreateServices';
 import { SharedDataService } from 'src/app/services/sharedataservices/SharedData';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-create-asset',
@@ -31,28 +32,28 @@ export class CreateAssetComponent implements OnInit {
     private translateService: TranslateService) {
 
     this.register = this.formBuilder.group({
-      id: 0,
+      id: "",
       assetName: ['', [Validators.minLength(5), Validators.required]],
       department: [0, [Validators.nullValidator, Validators.required]],
       EMailAdressOfDepartment: ['', [Validators.email, Validators.required]],
-      countryOfDepartment: ['', [Validators.required]],
+      //countryOfDepartment: ['', [Validators.required]],
       PurchaseDate: ['', [Validators.nullValidator, Validators.required, this.createServices.validatePurchaseDate]],
-      LifeSpan: 3//new(?)
+      LifeSpan: ['', [Validators.nullValidator, Validators.required]]
     });
 
     this.sharedData.currentAssetData.subscribe(asset => {
-      if (asset && asset.assetName != null) {
+      if (asset && asset.name != null) {
         this.ViewEditButton = true;
         this.selectedValue = asset.department;
-        this.IdForEdit = asset.assetName;
+        this.IdForEdit = asset.id;
         this.register.patchValue({
           id: asset.id,
-          assetName: asset.assetName,
-          EMailAdressOfDepartment: asset.eMailAdressOfDepartment,
-          countryOfDepartment: asset.countryOfDepartment,
+          assetName: asset.name,
+          EMailAdressOfDepartment: asset.departmentMail,
+          department: this.selectedValue,
+          //countryOfDepartment: asset.countryOfDepartment,
           PurchaseDate: this.createServices.FormattedDate(asset),
-          Lifespan: this.asset?.Lifespan,//new
-          broken: asset.broken
+          LifeSpan: asset.lifespan,
         });
       }
     });
@@ -75,7 +76,7 @@ export class CreateAssetComponent implements OnInit {
     return input?.invalid && input?.touched;
   };
   inputInvalidLifeSpan = () => {
-    const input = this.register.get('assetName');
+    const input = this.register.get('Lifespan');
     return input?.invalid && input.touched;
   };
 
@@ -83,18 +84,16 @@ export class CreateAssetComponent implements OnInit {
     this.loading = true;
 
     const asset: IAsset = {
-      //Id: "",
-      Name: this.register.value.assetName,
-      Department: parseInt(this.register.value.department),
-      DepartmentMail: this.register.value.EMailAdressOfDepartment,
+      id: uuidv4(),
+      name: this.register.value.assetName,
+      department: parseInt(this.register.value.department),
+      departmentMail: this.register.value.EMailAdressOfDepartment,
       //countryOfDepartment: this.register.value.countryOfDepartment,
-      PurchaseDate: this.register.value.PurchaseDate,
-      //broken: this.register.value.broken,
-      Lifespan: this.register.value.LifeSpan,//fix here (recibe el dato del html)
+      purchaseDate: this.register.value.PurchaseDate,
+      lifespan: this.register.value.LifeSpan,//fix here (recibe el dato del html)
       RemainingLifespan: {}
     }
-    console.log(JSON.stringify(asset) + "asset creado");
-
+    console.log(asset);
     try {
       const message = await this.createServices.AddAsset(asset);
       this.translateService.get('SaveAsset').subscribe((translatedMessage: string) => {
@@ -103,6 +102,7 @@ export class CreateAssetComponent implements OnInit {
       this.router.navigate(["/app-assets-list"]);
     } catch (error) {
       this.toastr.error(error as string, "Error");
+      console.log(error + " aqui es");
     }
     this.loading = false;
   }
@@ -138,25 +138,27 @@ export class CreateAssetComponent implements OnInit {
       this.purchaseDateError = '';
     }
   }
+  
   PutAsset() {
     const asset: IAsset = {
-      //Id: "",//Obtener Id para editar
-      Name: this.register.value.assetName,
-      Department: parseInt(this.register.value.department),
-      DepartmentMail: this.register.value.EMailAdressOfDepartment,
+      id: this.IdForEdit,
+      name: this.register.value.assetName,
+      department: parseInt(this.register.value.department),
+      departmentMail: this.register.value.EMailAdressOfDepartment,
       //countryOfDepartment: this.register.value.countryOfDepartment,
-      PurchaseDate: this.register.value.PurchaseDate,
+      purchaseDate: this.register.value.PurchaseDate,
       //broken: this.register.value.broken,
-      Lifespan: this.register.value.LifeSpan,//fix here (recibe el dato del html)
+      lifespan: this.register.value.LifeSpan,//fix here (recibe el dato del html)
       RemainingLifespan: {}
     }
 
     this._AssetServices.putAsset(this.IdForEdit, asset).subscribe(data => {
-      this.toastr.success(data.message);
+      this.toastr.info(data.message);
       this.ViewEditButton = false;
       this.router.navigate(["/app-assets-list"]);
     }, error => {
       this.toastr.error(error.error.message);
+      
     })
 
   }

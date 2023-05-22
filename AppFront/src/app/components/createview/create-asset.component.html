@@ -42,9 +42,9 @@
             <span class="text-danger" *ngIf="register.get('EMailAdressOfDepartment')?.hasError('email')
           && register.get('EMailAdressOfDepartment')?.touched" [innerHTML]="'ValidatorMail2' | translate"></span>
           </div>
-        </div>
+        <!--</div>-->
         <!--Coutry-->
-        <div class="row form-control-sm">
+        <!--<div class="row form-control-sm">
           <div class="col">
             <div class="d-flex align-items-center spinner-grow-sm">
               <label class="form-label" style="margin-right: 10px; margin: 2px">{{'Country' | translate}}</label>
@@ -55,10 +55,10 @@
                 </div>
               </div>
             </div>
-            <input type="text" class="form-control" placeholder="{{'Country' | translate}}" formControlName="countryOfDepartment"><!--(blur)="onCountry()" [ngClass]="{'input-error': inputInvalidCoutry()}"-->
-            <span class="text-danger ml-2" *ngIf="register.get('countryOfDepartment')?.hasError('required')&& register.get('countryOfDepartment')?.touched" [innerHTML]="'ValidateCountry2' | translate"></span>
+            <input type="text" class="form-control" placeholder="{{'Country' | translate}}" formControlName="countryOfDepartment">--><!--(blur)="onCountry()" [ngClass]="{'input-error': inputInvalidCoutry()}"-->
+            <!--<span class="text-danger ml-2" *ngIf="register.get('countryOfDepartment')?.hasError('required')&& register.get('countryOfDepartment')?.touched" [innerHTML]="'ValidateCountry2' | translate"></span>
             <span class="text-danger ml-2" *ngIf="validCountry"><strong>{{validCountry}}</strong></span>
-          </div>
+          </div>-->
           <!--Purchase Date-->
           <div class="col">
             <label class="form-label">{{'PurchaseDate' | translate}}</label>
@@ -71,14 +71,9 @@
         <div class="form-control-sm">
           <div class="col">
             <label class="form-label">{{'Broken' | translate}}</label>
-            <input type="number" class="form-control" placeholder="{{'PlaceholderLifeSpan' | translate}}" formControlName="LifeSpan"></div>
-          <!--[ngClass]="{'input-error': inputInvalidLifeSpan()}"-->
+            <input type="number" class="form-control" placeholder="{{'PlaceholderLifeSpan' | translate}}" formControlName="LifeSpan"
+            [ngClass]="{'input-error': inputInvalidLifeSpan()}"></div>
         </div>
-
-          <!--<div class="form-check form-control-sm" style="margin:13px">
-      <input class="form-check-input" type="checkbox" value="false" formControlName="broken">
-      <label class="form-check-label" for="flexCheckDefault">{{'Broken' | translate}}</label>
-    </div>-->
           <!--Buttons-->
           <div class="row">
             <button class="btn btn-secondary col" type="button" style="margin:10px" data-bs-toggle="modal" data-bs-target="#resetModal"

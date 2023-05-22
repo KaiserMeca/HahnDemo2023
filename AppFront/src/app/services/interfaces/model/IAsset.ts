@@ -1,12 +1,11 @@
 export interface IAsset {
-  //Id: string;
-  Name: string;
-  Department: number;
+  id: string;
+  name: string;
+  department: number;
   //countryOfDepartment: string;
-  DepartmentMail: string;
-  PurchaseDate: Date;
-  Lifespan: number;
-  RemainingLifespan: any;
-  //broken: boolean;
+  departmentMail: string;
+  purchaseDate: Date;
+  lifespan: number;
+  RemainingLifespan: {};
 }
 

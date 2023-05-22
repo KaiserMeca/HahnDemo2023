@@ -2,11 +2,10 @@
 {
     public enum Department
     {
-        HQ = 1,
-        Store1 = 2,
-        Store2 = 3,
-        Store3 = 4,
-        MaintenanceStation = 5
+        HQ = 0,
+        Store1 = 1,
+        Store2 = 2,
+        Store3 = 3,
+        MaintenanceStation = 4
     }
-    //HQ, Store1, Store2, Store3, MaintenanceStation
 }

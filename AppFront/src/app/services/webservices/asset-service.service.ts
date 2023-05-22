@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { enviroment } from './Enviroment';
 import { IAsset } from '../interfaces/model/IAsset';
 import { TranslateService } from '@ngx-translate/core';
+import { v5 as uuidv5 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +30,10 @@ export class AssetServiceService {
     this.updateHttpOptions();
     return this.http.post(enviroment.endpoint + enviroment.myApiUrl, asset);//, this.httpOptions
   }
-  deleteAsset(name: string): Observable<any> {
+  deleteAsset(id: string): Observable<any> {
     this.updateHttpOptions();
-    return this.http.delete(enviroment.endpoint + enviroment.myApiUrl + name);//, this.httpOptions
+    console.log(id);
+    return this.http.delete(enviroment.endpoint + enviroment.myApiUrl + id);//, this.httpOptions
   }
   //searchCountry(country: string): Observable<any> {
   //  this.updateHttpOptions();

@@ -23,17 +23,17 @@
             </thead>
             <tbody>
               <tr *ngFor="let Asset of AssetsList">
-                <td>{{Asset.Name}}</td>
-                <td>{{ getDepartment(Asset.Department)}}</td>
+                <td>{{Asset.name}}</td>
+                <td>{{ getDepartment(Asset.department)}}</td>
                 <!--<td>{{Asset.countryOfDepartment}}</td>-->
-                <td>{{Asset.DepartmentMail}}</td>
-                <td>{{Asset.PurchaseDate}}</td>
-                <td>{{Asset.Lifespan}}</td>
+                <td>{{Asset.departmentMail}}</td>
+                <td>{{Asset.purchaseDate}}</td>
+                <td>{{Asset.lifespan}}</td>
                 <td><i class="fa-solid fa-pen text-primary" style="cursor: pointer" (click)="Edit(Asset)"></i></td>
                 <td>
                   <i class="fa-sharp fa-solid fa-trash text-danger"
                      style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#resetModal"
-                     (click)="GetId(Asset.Name)"></i><!--modificado-->
+                     (click)="GetId(Asset.id, Asset.name)"></i><!--modificado-->
                 </td>
               </tr>
             </tbody>

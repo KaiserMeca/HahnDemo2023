@@ -35,12 +35,11 @@ export class CreateServices implements ICreateServices {
   }
  
   FormattedDate(asset: IAsset) {
-    const purchaseDateConvert = new Date(asset.PurchaseDate);
+    const purchaseDateConvert = new Date(asset.purchaseDate);
     const year = purchaseDateConvert.getFullYear();
     const month = purchaseDateConvert.getMonth() + 1;
     const day = purchaseDateConvert.getDate();
     const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    console.log(formattedDate)
     return formattedDate;
   }
 

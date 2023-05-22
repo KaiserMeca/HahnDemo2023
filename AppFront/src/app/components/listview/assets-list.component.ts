@@ -15,19 +15,9 @@ export class AssetsListComponent implements OnInit {
   ngOnInit(): void {
     this.GetAssets();
   }
-  AssetsList: IAsset[] = [
-   // {
-  //  Name: "loloSSS",
-  //  Id: "",
-  //  Department: 1,
-  //  DepartmentMail: "DSDSD@SDSD",
-  //  Lifespan: 3,
-  //  PurchaseDate: new Date(),
-  //  RemainingLifespan: {}
-  //}
-  ];
+  AssetsList: IAsset[] = [];
   AssetEdit: IAsset | undefined;
-  selectId: number = 0;
+  selectId: string = "";
   selectName: string = "";
 
   constructor(private _AssetServices: AssetServiceService, private toastr: ToastrService, private router: Router,
@@ -42,12 +32,12 @@ export class AssetsListComponent implements OnInit {
   }
 
   async DeleteAsset() {
-    this.toastr.success(await this.listServices.deleteAsset(this.selectName));
+    this.toastr.success(await this.listServices.deleteAsset(this.selectId));
     this.GetAssets();
   }
-  GetId(name: string) {
-    this.selectName = name;
-    console.log(this.selectName + "esto")
+  GetId(_id: string, _name: string) {
+    this.selectId = _id
+    this.selectName = _name;
   }
 
   //This function is to pass the data obtained from assetList and pass it to CreateAsset for editing

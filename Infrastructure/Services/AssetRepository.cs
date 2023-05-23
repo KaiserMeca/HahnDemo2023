@@ -4,7 +4,7 @@ using Domain.Assets.Aggregates.Events;
 using Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure
+namespace Infrastructure.Services
 {
     public class AssetRepository : IAssetRepository
     {
@@ -29,7 +29,7 @@ namespace Infrastructure
             }
             else
             {
-                
+
                 await _context.Assets.AddAsync(asset);
                 await _unitOfWork.SaveAsync();
                 return true;
@@ -66,12 +66,12 @@ namespace Infrastructure
         public async Task<bool> UpdateAsync(Guid id, Asset asset)
         {
             Asset? assetDB = await _context.Assets.FirstOrDefaultAsync(a => a.Id == id);
-            
+
             if (assetDB == null)
             {
                 return false;
             }
-            
+
             else
             {
                 Asset? assetInDataBase = await _context.Assets.FindAsync(assetDB.Id);
@@ -83,7 +83,8 @@ namespace Infrastructure
                 {
                     if (domainEvent is UpdateAssetData updateAssetData)
                     {
-                        assetInDataBase.ApplyUpdateAssetData(new UpdateAssetData(asset.Name, asset.DepartmentMail));
+                        assetInDataBase.ApplyUpdateAssetData(new UpdateAssetData(asset.Name, asset.DepartmentMail, asset.Department, asset.PurchaseDate,
+                            asset.Lifespan));
                         await _unitOfWork.SaveAsync();
                     }
                 }

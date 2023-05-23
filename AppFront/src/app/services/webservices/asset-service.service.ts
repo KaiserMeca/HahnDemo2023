@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { enviroment } from './Enviroment';
-import { IAsset } from '../interfaces/model/IAsset';
+import { IAsset } from 'src/app/model/IAsset';
 import { TranslateService } from '@ngx-translate/core';
 import { v5 as uuidv5 } from 'uuid';
 

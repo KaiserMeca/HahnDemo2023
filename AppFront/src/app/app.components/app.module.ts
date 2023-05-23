@@ -12,12 +12,14 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 //Components
 import { AppComponent } from './app.component';
-import { CreateAssetComponent } from '../components/createview/create-asset.component';
+import { CreateAssetComponent } from 'src/app/components/createview/create-asset.component';
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { AssetsListComponent } from '../components/listview/assets-list.component';
 import { LoadingComponent } from '../components/loading/loading.component';
 import { ListServices } from '../services/webservices/ListServices';
 import { CreateServices } from '../services/webservices/CreateSevices';
+import { ValidatorServices } from '../services/Validators/FieldValidator/ValidatorServices';//new
+
 
 @NgModule({
   declarations: [
@@ -50,6 +52,10 @@ import { CreateServices } from '../services/webservices/CreateSevices';
     {
       provide: 'ICreateServicesToken',
       useClass: CreateServices
+    },
+    {
+      provide: 'IValidatorServicesToken',
+      useClass: ValidatorServices
     }
   ],
   bootstrap: [AppComponent]

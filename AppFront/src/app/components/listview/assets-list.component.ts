@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { IAsset } from 'src/app/services/interfaces/model/IAsset';
+import { IAsset } from 'src/app/model/IAsset';
 import { AssetServiceService } from 'src/app/services/webservices/asset-service.service';
 import { SharedDataService } from '../../services/sharedataservices/SharedData';
 import { IListServices } from '../../services/interfaces/IListServices';

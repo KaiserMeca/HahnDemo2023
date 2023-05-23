@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IAsset } from 'src/app/services/interfaces/model/IAsset';
+import { IAsset } from 'src/app/model/IAsset';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,4 @@
 using Infrastructure.DataBase;
-using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Domain.Assets.Aggregates;

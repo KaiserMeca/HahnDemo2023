@@ -21,6 +21,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "bootstrap": "^5.3.0-alpha1",
+    "fluentvalidation-ts": "^3.1.0",
     "jest-editor-support": "*",
     "ngx-toastr": "^16.2.0",
     "rxjs": "~7.8.0",

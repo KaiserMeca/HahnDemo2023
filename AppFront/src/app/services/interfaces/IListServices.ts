@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { IAsset } from "../interfaces/model/IAsset";
+import { IAsset } from "../../model/IAsset";
 
 export interface IListServices {
   GetAssets(): Observable<IAsset[]>;

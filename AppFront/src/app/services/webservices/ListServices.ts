@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { IAsset } from "../interfaces/model/IAsset";
+import { IAsset } from "src/app/model/IAsset";
 import { AssetServiceService } from "./asset-service.service";
 import { IListServices } from "../interfaces/IListServices";
 

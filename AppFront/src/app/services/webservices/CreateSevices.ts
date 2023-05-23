@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { ICreateServices } from "src/app/services/interfaces/ICreateServices";
-import { IAsset } from '../interfaces/model/IAsset';
+import { IAsset } from '../../model/IAsset';
 import { AssetServiceService } from './asset-service.service';
 
 @Injectable({
@@ -26,13 +26,14 @@ export class CreateServices implements ICreateServices {
       });
     });
   }
-  validatePurchaseDate(control: AbstractControl): ValidationErrors | null {
-    const currentDate = new Date();
-    const purchaseDate = new Date(control.value);
-    const timeDiff = Math.abs(currentDate.getTime() - purchaseDate.getTime());
-    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return diffDays > 365 ? { purchaseDateError: true } : null;
-  }
+
+  //validatePurchaseDate(control: AbstractControl): ValidationErrors | null {
+  //  const currentDate = new Date();
+  //  const purchaseDate = new Date(control.value);
+  //  const timeDiff = Math.abs(currentDate.getTime() - purchaseDate.getTime());
+  //  const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  //  return diffDays > 365 ? { purchaseDateError: true } : null;
+  //}
  
   FormattedDate(asset: IAsset) {
     const purchaseDateConvert = new Date(asset.purchaseDate);

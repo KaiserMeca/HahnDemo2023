@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AssetServiceService } from 'src/app/services/webservices/asset-service.service';
-import { IAsset } from 'src/app/services/interfaces/model/IAsset';
+import { IAsset } from 'src/app/model/IAsset';
 import { ICreateServices } from 'src/app/services/interfaces/ICreateServices';
 import { SharedDataService } from 'src/app/services/sharedataservices/SharedData';
+import { Validator } from 'fluentvalidation-ts';
 import { v4 as uuidv4 } from 'uuid';
+import { IValidatorServices } from '../../services/interfaces/IValidatorServices';
 
 @Component({
   selector: 'app-create-asset',
@@ -29,17 +31,20 @@ export class CreateAssetComponent implements OnInit {
 
   constructor(private _AssetServices: AssetServiceService, private formBuilder: FormBuilder, private toastr: ToastrService,
     private router: Router, private sharedData: SharedDataService, @Inject('ICreateServicesToken') private createServices: ICreateServices,
-    private translateService: TranslateService) {
+    private translateService: TranslateService, @Inject('IValidatorServicesToken') private validate: IValidatorServices) {
+
 
     this.register = this.formBuilder.group({
       id: "",
-      assetName: ['', [Validators.minLength(5), Validators.required]],
+      assetName: ['', [this.validate.ValidName.bind(this)]],/*['', [Validators.minLength(5), Validators.required]]*/ 
       department: [0, [Validators.nullValidator, Validators.required]],
-      EMailAdressOfDepartment: ['', [Validators.email, Validators.required]],
+      EMailAdressOfDepartment: ['', [this.validate.ValidName.bind(this)]],/*['', [Validators.email, Validators.required]],*/
       //countryOfDepartment: ['', [Validators.required]],
-      PurchaseDate: ['', [Validators.nullValidator, Validators.required, this.createServices.validatePurchaseDate]],
+      PurchaseDate: ['', this.validate.validatePurchaseDate.bind(this)],
       LifeSpan: ['', [Validators.nullValidator, Validators.required]]
     });
+
+    
 
     this.sharedData.currentAssetData.subscribe(asset => {
       if (asset && asset.name != null) {
@@ -59,14 +64,14 @@ export class CreateAssetComponent implements OnInit {
     });
   }
 
-  inputInvalidName = () => {
-    const input = this.register.get('assetName');
-    return input?.invalid && input.touched;
-  };
-  inputInvalidEmail = () => {
-    const input = this.register.get('EMailAdressOfDepartment');
-    return input?.invalid && input.touched;
-  };
+  //inputInvalidName = () => {
+  //  const input = this.register.get('assetName');
+  //  return input?.invalid && input.touched;
+  //};
+  //inputInvalidEmail = () => {
+  //  const input = this.register.get('EMailAdressOfDepartment');
+  //  return input?.invalid && input.touched;
+  //};
   //inputInvalidCoutry = () => {
   //  const input = this.register.get('countryOfDepartment');
   //  return this.validCountry != "" && input?.touched;
@@ -124,6 +129,8 @@ export class CreateAssetComponent implements OnInit {
   selectedValue: string = "";
   purchaseDateError: string = '';
 
+  
+
   onPurchaseDateBlur() {
     const purchaseDate = this.register.value.PurchaseDate;
     const oneYearAgo = new Date();
@@ -147,8 +154,7 @@ export class CreateAssetComponent implements OnInit {
       departmentMail: this.register.value.EMailAdressOfDepartment,
       //countryOfDepartment: this.register.value.countryOfDepartment,
       purchaseDate: this.register.value.PurchaseDate,
-      //broken: this.register.value.broken,
-      lifespan: this.register.value.LifeSpan,//fix here (recibe el dato del html)
+      lifespan: this.register.value.LifeSpan,
       RemainingLifespan: {}
     }
 

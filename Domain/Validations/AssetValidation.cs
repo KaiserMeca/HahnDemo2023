@@ -30,7 +30,7 @@ namespace Domain.Validations
         /// <returns>True if the purchase date is greater than one year, false otherwise.</returns>
         public bool OneYearPurchaseDate(DateTime purchaseDate)
         {
-            if (DateTime.Now.AddDays(-365) <= purchaseDate)
+            if (DateTime.Now.AddDays(-730) <= purchaseDate)
             {
                 return true;
             }

@@ -28,7 +28,6 @@ export class AssetsListComponent implements OnInit {
   async GetAssets() {
     const data = await this.listServices.GetAssets().toPromise();
     this.AssetsList = data as IAsset[];
-    console.log(this.AssetsList);
   }
 
   async DeleteAsset() {

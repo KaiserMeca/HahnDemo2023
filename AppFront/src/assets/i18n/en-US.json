@@ -4,6 +4,7 @@
   "List": "List",
   "Create": "Create",
   "LifeSpan": "Lifespan",
+  "LifeSpanError": "The lifespan cannot exceed 20 years",
   "RemainingLifespan": "Remaining Lifespan",
   "Cancel": "Cancel",
   "Close": "Close",
@@ -30,6 +31,6 @@
   "ValidatorName1": "The Asset name <strong>is required<strong>",
   "ValidatorName2": "Minimum <strong>length: 5 letters<strong>",
   "SaveAsset": "Save asset",
-  "PurchaseError": "The date should not be greater than one year.",
+  "PurchaseError": "The date should not be greater than two year.",
   "Delete": "Remove: "
 }

@@ -30,8 +30,6 @@ namespace Domain.Assets
         #region ValidateTimedOut
         private static string ValidateTimedOut(int y, int m, int d)
         {
-            string remainingDurationReturn = "";
-
             if (y == 0 && m == 0 && d == 0)
             {
                 return "Timed out";
@@ -40,21 +38,52 @@ namespace Domain.Assets
             {
                 return "Timed out";
             }
-            if (remainingDurationReturn == "")
+
+            string remainingDurationReturn = "";
+
+            if (y == 0)
             {
-                if (y == 0)
-                {
-                    return "   " + m + "m " + d + "d";
-                }
-                if (m == 0)
-                {
-                    return "   " + "   " + d + "d";
-                }
-                return y + "y " + m + "m " + d + "d";
+                remainingDurationReturn += $"{m}m ";
             }
+            else
+            {
+                remainingDurationReturn += $"{y}y ";
+                remainingDurationReturn += $"{m}m ";
+            }
+
+            remainingDurationReturn += $"{d}d";
 
             return remainingDurationReturn;
         }
+
+
+        //private static string ValidateTimedOut(int y, int m, int d)
+        //{
+        //    string remainingDurationReturn = "";
+
+        //    if (y == 0 && m == 0 && d == 0)
+        //    {
+        //        return "Timed out";
+        //    }
+        //    if (y < 0 || m < 0 || d < 0)
+        //    {
+        //        return "Timed out";
+        //    }
+        //    if (remainingDurationReturn == "")
+        //    {
+        //        if (y == 0)
+        //        {
+        //            return "   " + m + "m " + d + "d";
+        //        }
+        //        if (m == 0)
+        //        {
+        //            return "   " + "   " + d + "d";
+        //        }
+        //        return y + "y " + m + "m " + d + "d";
+        //    }
+
+        //    return remainingDurationReturn;
+        //}
         #endregion
     }
 }

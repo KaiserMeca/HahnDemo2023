@@ -7,9 +7,9 @@ import { AssetServiceService } from 'src/app/services/webservices/asset-service.
 import { IAsset } from 'src/app/model/IAsset';
 import { ICreateServices } from 'src/app/services/interfaces/ICreateServices';
 import { SharedDataService } from 'src/app/services/sharedataservices/SharedData';
-import { Validator } from 'fluentvalidation-ts';
 import { v4 as uuidv4 } from 'uuid';
 import { IValidatorServices } from '../../services/interfaces/IValidatorServices';
+
 
 @Component({
   selector: 'app-create-asset',
@@ -36,15 +36,13 @@ export class CreateAssetComponent implements OnInit {
 
     this.register = this.formBuilder.group({
       id: "",
-      assetName: ['', [this.validate.ValidName.bind(this)]],/*['', [Validators.minLength(5), Validators.required]]*/ 
-      department: [0, [Validators.nullValidator, Validators.required]],
-      EMailAdressOfDepartment: ['', [this.validate.ValidName.bind(this)]],/*['', [Validators.email, Validators.required]],*/
+      assetName: ['', [this.validate.ValidName.bind(this)]],
+      department: ['', [this.validate.ValidDepartment.bind(this)]],//Hay un error aqui
+      EMailAdressOfDepartment: ['', [this.validate.ValidMail.bind(this)]],
       //countryOfDepartment: ['', [Validators.required]],
-      PurchaseDate: ['', this.validate.validatePurchaseDate.bind(this)],
-      LifeSpan: ['', [Validators.nullValidator, Validators.required]]
+      PurchaseDate: ['', this.validate.ValidatePurchaseDate.bind(this)],
+      LifeSpan: ['', [this.validate.ValidateLifespanDate.bind(this)]]
     });
-
-    
 
     this.sharedData.currentAssetData.subscribe(asset => {
       if (asset && asset.name != null) {
@@ -63,28 +61,7 @@ export class CreateAssetComponent implements OnInit {
       }
     });
   }
-
-  //inputInvalidName = () => {
-  //  const input = this.register.get('assetName');
-  //  return input?.invalid && input.touched;
-  //};
-  //inputInvalidEmail = () => {
-  //  const input = this.register.get('EMailAdressOfDepartment');
-  //  return input?.invalid && input.touched;
-  //};
-  //inputInvalidCoutry = () => {
-  //  const input = this.register.get('countryOfDepartment');
-  //  return this.validCountry != "" && input?.touched;
-  //};
-  inputInvalidPurchaseDate = () => {
-    const input = this.register.get('PurchaseDate');
-    return input?.invalid && input?.touched;
-  };
-  inputInvalidLifeSpan = () => {
-    const input = this.register.get('Lifespan');
-    return input?.invalid && input.touched;
-  };
-
+  
   async submit(): Promise<void> {
     this.loading = true;
 
@@ -95,7 +72,7 @@ export class CreateAssetComponent implements OnInit {
       departmentMail: this.register.value.EMailAdressOfDepartment,
       //countryOfDepartment: this.register.value.countryOfDepartment,
       purchaseDate: this.register.value.PurchaseDate,
-      lifespan: this.register.value.LifeSpan,//fix here (recibe el dato del html)
+      lifespan: this.register.value.LifeSpan,
       RemainingLifespan: {}
     }
     console.log(asset);
@@ -157,6 +134,7 @@ export class CreateAssetComponent implements OnInit {
       lifespan: this.register.value.LifeSpan,
       RemainingLifespan: {}
     }
+    console.log(asset);
 
     this._AssetServices.putAsset(this.IdForEdit, asset).subscribe(data => {
       this.toastr.info(data.message);

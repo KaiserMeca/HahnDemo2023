@@ -33,14 +33,17 @@
             <div class="form-group">
               <label class="form-label">{{'Department' | translate}}</label>
               <label class="text-danger">&nbsp;&nbsp;&nbsp;{{departmentEdit}}</label>
-              <select class="form-select" formControlName="department" [(ngModel)]="selectedValue">
+              <select class="form-select" formControlName="department" [(ngModel)]="selectedValue"
+                      [ngClass]="{'input-error': register.get('department')?.invalid && register.get('department')?.touched }">
                 <option value="0">HQ</option>
                 <option value="1">Store1</option>
                 <option value="2">Store2</option>
                 <option value="3">Store3</option>
                 <option value="4">MaintenanceStation</option>
               </select>
-              <span class="text-danger" *ngIf="register.get('department')?.hasError('required') && register.get('department')?.touched" [innerHTML]="'ValidatorDpto' | translate"></span>
+              <span class="text-danger" *ngIf="register.get('department')?.invalid && register.get('department')?.touched"
+                    [innerHTML]="'ValidatorDpto' | translate"></span>
+              
             </div>
           </div>
           <div class="col-6 form-control-sm">
@@ -60,10 +63,12 @@
           <div class="col-6 form-control-sm">
             <!-- Purchase Date -->
             <div class="form-group">
-              <label class="form-label">{{'PurchaseDate' | translate}}</label>
-              <input type="date" class="form-control" placeholder="date" formControlName="PurchaseDate" (change)="onPurchaseDateBlur()"
-                     [ngClass]="{'input-error': inputInvalidPurchaseDate()}">
-              <span *ngIf="purchaseDateError" class="text-danger ml-2">{{ purchaseDateError }}</span>
+              <label class="form-label">{{ 'PurchaseDate' | translate }}</label>
+              <input type="date" class="form-control" placeholder="date" formControlName="PurchaseDate"
+                     [ngClass]="{'input-error': register.get('PurchaseDate')?.invalid && register.get('PurchaseDate')?.touched}"><!--(change)="onPurchaseDateBlur()"-->
+              <span *ngIf="register.get('PurchaseDate')?.invalid && register.get('PurchaseDate')?.touched" class="text-danger ml-2">
+                {{ 'PurchaseError' | translate }}
+              </span>
             </div>
           </div>
           <div class="col-6 form-control-sm">
@@ -71,7 +76,10 @@
             <div class="form-group">
               <label class="form-label">{{'LifeSpan' | translate}}</label>
               <input type="number" class="form-control" placeholder="{{'PlaceholderLifeSpan' | translate}}" formControlName="LifeSpan"
-                     [ngClass]="{'input-error': inputInvalidLifeSpan()}">
+                     [ngClass]="{'input-error': register.get('LifeSpan')?.invalid && register.get('LifeSpan')?.touched}">
+              <span *ngIf="register.get('LifeSpan')?.invalid && register.get('LifeSpan')?.touched" class="text-danger ml-2">
+                {{ 'LifeSpanError' | translate }}
+              </span>
             </div>
           </div>
         </div>

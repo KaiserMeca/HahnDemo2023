@@ -7,7 +7,7 @@ export interface Mail {
 export class AssetMailValidator extends Validator<Mail> {
   constructor() {
     super();
-
+    
     this.ruleFor('mail')
       .emailAddress();
   }

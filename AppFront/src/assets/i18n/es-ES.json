@@ -4,6 +4,7 @@
   "List": "Lista",
   "Create": "Crear",
   "LifeSpan": "Vida útil",
+  "LifeSpanError": "La vida útil no puede superar los 20 años",
   "RemainingLifespan": "Vida útil restante",
   "Cancel": "Cancelar",
   "Close": "Cerrar",
@@ -30,6 +31,6 @@
   "ValidatorName1": "El nombre del activo <strong>es obligatorio<strong>",
   "ValidatorName2": "Minimo <strong>5 letras<strong>",
   "SaveAsset": "Activo guardado",
-  "PurchaseError": "La fecha no debe ser mayor a un año.",
+  "PurchaseError": "La fecha no debe ser mayor a dos año.",
   "Delete": "Eliminado: "
 }

@@ -41,9 +41,11 @@ namespace Infrastructure.Services
 
         public Task<bool> AddAsync(AssetDTO assetDTO)
         {
-            var asset = _mapper.Map<Asset>(assetDTO);
-            if (AssetValidation.ValidateOk(asset).Count == 0 )
+            var assetMap = _mapper.Map<Asset>(assetDTO);
+            if (AssetValidation.ValidateOk(assetMap).Count == 0 )
             {
+                Asset asset = Asset.CreateNew(assetMap.Name, assetMap.Department, assetMap.DepartmentMail,
+                    assetMap.PurchaseDate,assetMap.Lifespan);
                 return _repository.AddAsync(asset);
             }
             else

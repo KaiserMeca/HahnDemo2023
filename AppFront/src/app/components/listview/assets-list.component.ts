@@ -27,12 +27,16 @@ export class AssetsListComponent implements OnInit {
 
   async GetAssets() {
     const data = await this.listServices.GetAssets().toPromise();
-    this.AssetsList = data as IAsset[];
+    if (Array.isArray(data)) {
+      this.AssetsList = data as IAsset[];
+    } else {
+      this.AssetsList = []; 
+    }
   }
 
   async DeleteAsset() {
-    this.toastr.success(await this.listServices.deleteAsset(this.selectId));
-    this.GetAssets();
+    this.toastr.success(await this.listServices.deleteAsset(this.selectId, this.selectName));
+    await this.GetAssets();
   }
   GetId(_id: string, _name: string) {
     this.selectId = _id

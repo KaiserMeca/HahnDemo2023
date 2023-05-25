@@ -7,7 +7,6 @@ import { AssetServiceService } from 'src/app/services/webservices/asset-service.
 import { IAsset } from 'src/app/model/IAsset';
 import { ICreateServices } from 'src/app/services/interfaces/ICreateServices';
 import { SharedDataService } from 'src/app/services/sharedataservices/SharedData';
-import { v4 as uuidv4 } from 'uuid';
 import { IValidatorServices } from '../../services/interfaces/IValidatorServices';
 
 
@@ -26,7 +25,7 @@ export class CreateAssetComponent implements OnInit {
   loadingCountry = false;
   asset: IAsset | undefined;
   register: FormGroup;
-  departmentEdit: string = "";
+  //departmentEdit: string = "";
   ViewEditButton: boolean = false;
 
   constructor(private _AssetServices: AssetServiceService, private formBuilder: FormBuilder, private toastr: ToastrService,
@@ -37,9 +36,8 @@ export class CreateAssetComponent implements OnInit {
     this.register = this.formBuilder.group({
       id: "",
       assetName: ['', [this.validate.ValidName.bind(this)]],
-      department: ['', [this.validate.ValidDepartment.bind(this)]],//Hay un error aqui
+      department: ['', [this.validate.ValidDepartment.bind(this)]],
       EMailAdressOfDepartment: ['', [this.validate.ValidMail.bind(this)]],
-      //countryOfDepartment: ['', [Validators.required]],
       PurchaseDate: ['', this.validate.ValidatePurchaseDate.bind(this)],
       LifeSpan: ['', [this.validate.ValidateLifespanDate.bind(this)]]
     });
@@ -58,15 +56,15 @@ export class CreateAssetComponent implements OnInit {
           PurchaseDate: this.createServices.FormattedDate(asset),
           LifeSpan: asset.lifespan,
         });
+        console.log(asset.id);
       }
     });
   }
-  
   async submit(): Promise<void> {
     this.loading = true;
 
     const asset: IAsset = {
-      id: uuidv4(),
+      id: null,
       name: this.register.value.assetName,
       department: parseInt(this.register.value.department),
       departmentMail: this.register.value.EMailAdressOfDepartment,
@@ -89,39 +87,23 @@ export class CreateAssetComponent implements OnInit {
     this.loading = false;
   }
 
-  //onCountry() {
-  //  this.loadingCountry = true;
-  //  const countryIn = this.register.value.countryOfDepartment;
-  //  this._AssetServices.searchCountry(countryIn).subscribe(data => {
-  //    this.validCountry = "";
-  //    this.loadingCountry = false;
-  //  }, error => {
-  //    console.log(error);
-  //    this.validCountry = error.error.message;
-  //    this.loadingCountry = false;
-  //  })
-  //}
-
-  validCountry: string = "";
   selectedValue: string = "";
   purchaseDateError: string = '';
 
-  
+  //onPurchaseDateBlur() {
+  //  const purchaseDate = this.register.value.PurchaseDate;
+  //  const oneYearAgo = new Date();
+  //  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-  onPurchaseDateBlur() {
-    const purchaseDate = this.register.value.PurchaseDate;
-    const oneYearAgo = new Date();
-    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+  //  if (purchaseDate < oneYearAgo.toISOString()) {
+  //    this.translateService.get('PurchaseError').subscribe((translatedMessage: string) => {
+  //      this.purchaseDateError = translatedMessage
+  //    });
 
-    if (purchaseDate < oneYearAgo.toISOString()) {
-      this.translateService.get('PurchaseError').subscribe((translatedMessage: string) => {
-        this.purchaseDateError = translatedMessage
-      });
-
-    } else {
-      this.purchaseDateError = '';
-    }
-  }
+  //  } else {
+  //    this.purchaseDateError = '';
+  //  }
+  //}
   
   PutAsset() {
     const asset: IAsset = {
@@ -134,7 +116,7 @@ export class CreateAssetComponent implements OnInit {
       lifespan: this.register.value.LifeSpan,
       RemainingLifespan: {}
     }
-    console.log(asset);
+    console.log(this.IdForEdit);
 
     this._AssetServices.putAsset(this.IdForEdit, asset).subscribe(data => {
       this.toastr.info(data.message);
@@ -148,13 +130,14 @@ export class CreateAssetComponent implements OnInit {
 
   }
   cancelEdit() {
-    this.departmentEdit = '';
+    //this.departmentEdit = '';
     this.ViewEditButton = false;
     this.register.reset;
     this.router.navigate(["/app-assets-list"]);
   }
 
   Reset() {
-    this.departmentEdit = '';
+    this.register.reset();
+    //this.departmentEdit = '';
   }
 }

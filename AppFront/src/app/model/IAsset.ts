@@ -1,5 +1,5 @@
 export interface IAsset {
-  id: string;
+  id: string | null;
   name: string;
   department: number;
   //countryOfDepartment: string;

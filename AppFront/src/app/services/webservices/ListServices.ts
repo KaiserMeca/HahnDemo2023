@@ -19,12 +19,12 @@ export class ListServices implements IListServices {
     return this._AssetServices.getListAssets();
   }
 
-  async deleteAsset(id: string): Promise<string> {
+  async deleteAsset(id: string, name: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       this._AssetServices.deleteAsset(id).subscribe(data => {
 
         this.translateService.get('Delete').subscribe((translatedMessage: string) => {
-          this.message = translatedMessage /*+ assetName*/;//ver esto
+          this.message = translatedMessage + name;
           resolve(this.message);
         });
         

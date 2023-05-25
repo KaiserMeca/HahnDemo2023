@@ -3,6 +3,7 @@ using Domain.Assets;
 using Domain.Assets.Aggregates.Events;
 using Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Exceptions;
 
 namespace Infrastructure.Services
 {
@@ -21,7 +22,7 @@ namespace Infrastructure.Services
         {
             if (await _context.Assets.AnyAsync(x => x.Id == asset.Id))
             {
-                return false;
+                throw new RepeatedIdException("The user code already exist");//Ver excepcion
             }
             if (asset == null)
             {

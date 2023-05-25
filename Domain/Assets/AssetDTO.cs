@@ -2,9 +2,9 @@
 
 namespace Domain.Assets
 {
-    public class AssetDTO /*: AgregateRoot*/
+    public class AssetDTO
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         public string Name { get; set; }
         public Department Department { get; set; }
         public string DepartmentMail { get; set; }

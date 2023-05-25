@@ -12,7 +12,7 @@ namespace Domain.Assets
         {
             
         }
-        public Guid Id { get; private set; }
+        public Guid? Id { get; private set; }
 
         public string Name { get; private set; }
 
@@ -50,13 +50,17 @@ namespace Domain.Assets
 
         public void ApplyUpdateAssetData(UpdateAssetData eventData)
         {
-            if (Name != eventData.Name || DepartmentMail != eventData.DepartmentMail)
+            if (Name != eventData.Name || DepartmentMail != eventData.DepartmentMail || Department != eventData.Department || 
+                PurchaseDate != eventData.PurchaseDate || Lifespan != eventData.LifeSpan)
             {
                 Name = eventData.Name;
                 DepartmentMail = eventData.DepartmentMail;
+                Department = eventData.Department;
+                PurchaseDate = eventData.PurchaseDate;
+                Lifespan = eventData.LifeSpan;
             }
         }
-        public ValidationResult ValidateModel()
+        public ValidationResult ValidateAsset()
         {
             return new AssetValidation().Validate(this);
         }

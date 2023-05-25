@@ -32,7 +32,7 @@
             <!-- Asset Departments -->
             <div class="form-group">
               <label class="form-label">{{'Department' | translate}}</label>
-              <label class="text-danger">&nbsp;&nbsp;&nbsp;{{departmentEdit}}</label>
+              <!--<label class="text-danger">&nbsp;&nbsp;&nbsp;{{departmentEdit}}</label>-->
               <select class="form-select" formControlName="department" [(ngModel)]="selectedValue"
                       [ngClass]="{'input-error': register.get('department')?.invalid && register.get('department')?.touched }">
                 <option value="0">HQ</option>
@@ -100,6 +100,21 @@
               <button class="btn btn-primary col-6 col-md-3 col-lg-6" type="button" (click)="PutAsset()" style="margin:10px" [disabled]="register.invalid" *ngIf="ViewEditButton">
                 <i class="fas fa-regular fa-floppy-disk"></i>&nbsp;{{'Save' | translate}}
               </button>
+            </div>
+            <!-- Reset Modal -->
+            <div class="modal fade" id="resetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title fs-6" style="font-weight:bold" id="staticBackdropLabel">{{'ResetModalTitle' | translate}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-footer fs-6">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Cancel' | translate}}</button>
+                    <button type="reset" class="btn btn-primary" data-bs-dismiss="modal" (click)="Reset()">{{'Confirm' | translate}}</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

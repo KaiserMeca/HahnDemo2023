@@ -28,15 +28,20 @@ export class ValidatorServices implements IValidatorServices {
     const purchaseDate = new Date(control.value);
     const timeDiff = Math.abs(currentDate.getTime() - purchaseDate.getTime());
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return diffDays > 365 ? { purchaseDateError: true } : null;
+    return diffDays > 730 ? { purchaseDateError: true } : null;
   }
 
   ValidDepartment(control: AbstractControl): ValidationErrors | null {
 
-    const departmentValue = control.value.toString();
-    const fluentValidator = new AssetDepartmentValidator();
-    const validationResult = fluentValidator.validate({ dpto: departmentValue });
-    return validationResult;
+    if (control.value != null) {
+      const departmentValue = control.value.toString();
+      const fluentValidator = new AssetDepartmentValidator();
+      const validationResult = fluentValidator.validate({ dpto: departmentValue });
+      return validationResult;
+    }
+    else {
+      return null;
+    }
   }
 
   ValidateLifespanDate(control: AbstractControl): ValidationErrors | null {

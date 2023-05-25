@@ -28,7 +28,6 @@
                   <tr *ngFor="let Asset of AssetsList">
                     <td>{{Asset.name}}</td>
                     <td>{{ getDepartment(Asset.department)}}</td>
-                    <!--<td>{{Asset.countryOfDepartment}}</td>-->
                     <td>{{Asset.departmentMail}}</td>
                     <td>{{Asset.purchaseDate}}</td>
                     <td>{{Asset.lifespan}}</td>
@@ -37,7 +36,7 @@
                     <td>
                       <i class="fa-sharp fa-solid fa-trash text-danger"
                          style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#resetModal"
-                         (click)="GetId(Asset.id, Asset.name)"></i><!--modificado-->
+                         *ngIf="Asset.id !== null" (click)="GetId(Asset.id, Asset.name)"></i>
                     </td>
                   </tr>
                 </tbody>

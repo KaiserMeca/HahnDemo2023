@@ -85,6 +85,8 @@ namespace AppWebApi
                 app.UseSwaggerUI();
             }
 
+            app.UseMiddleware<MiddlewareExtension>();
+
             app.UseCors("AllowWebApp");
 
             app.UseHttpsRedirection();

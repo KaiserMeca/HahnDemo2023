@@ -2,7 +2,7 @@
 {
     public interface IDomainEntity
     {
-        Guid Id { get; }
+        Guid? Id { get; }
         DateTime PurchaseDate { get; }
         int Lifespan { get; }   
     }

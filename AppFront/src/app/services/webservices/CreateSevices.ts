@@ -27,14 +27,6 @@ export class CreateServices implements ICreateServices {
     });
   }
 
-  //validatePurchaseDate(control: AbstractControl): ValidationErrors | null {
-  //  const currentDate = new Date();
-  //  const purchaseDate = new Date(control.value);
-  //  const timeDiff = Math.abs(currentDate.getTime() - purchaseDate.getTime());
-  //  const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-  //  return diffDays > 365 ? { purchaseDateError: true } : null;
-  //}
- 
   FormattedDate(asset: IAsset) {
     const purchaseDateConvert = new Date(asset.purchaseDate);
     const year = purchaseDateConvert.getFullYear();

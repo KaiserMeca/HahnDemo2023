@@ -22,7 +22,7 @@ namespace AppWebApi.Controllers
             var Assets = await _services.GetAllAsync();
             if (Assets == null || !Assets.Any())
             {
-                return BadRequest(new { message = "Empty" });
+                return Ok(new { message = "Empty" });
             }
             return Ok(Assets);
         }

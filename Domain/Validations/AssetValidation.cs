@@ -43,7 +43,7 @@ namespace Domain.Validations
         public static List<string> ValidateOk(Asset asset)
         {
             
-            ValidationResult validationResults = asset.ValidateModel();
+            ValidationResult validationResults = asset.ValidateAsset();
             if (!validationResults.IsValid)
             {
                 foreach (var failure in validationResults.Errors)
@@ -55,7 +55,7 @@ namespace Domain.Validations
             }
             else
             {
-                return errors;//return empty List
+                return errors;//If there are no errors, it returns the empty list.
             }
         }
     }

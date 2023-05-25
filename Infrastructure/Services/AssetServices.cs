@@ -17,7 +17,6 @@ namespace Infrastructure.Services
             _mapper = mapper;
         }
 
-
         public async Task<IEnumerable<AssetDTO>> GetAllAsync()
         {
             var assetsList = await _repository.GetAllAsync();

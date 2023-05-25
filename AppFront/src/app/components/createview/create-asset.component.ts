@@ -35,11 +35,11 @@ export class CreateAssetComponent implements OnInit {
 
     this.register = this.formBuilder.group({
       id: "",
-      assetName: ['', [this.validate.ValidName.bind(this)]],
-      department: ['', [this.validate.ValidDepartment.bind(this)]],
-      EMailAdressOfDepartment: ['', [this.validate.ValidMail.bind(this)]],
-      PurchaseDate: ['', this.validate.ValidatePurchaseDate.bind(this)],
-      LifeSpan: ['', [this.validate.ValidateLifespanDate.bind(this)]]
+      assetName: ['', [Validators.required, this.validate.ValidName.bind(this)]],
+      department: ['', [Validators.required, this.validate.ValidDepartment.bind(this)]],
+      EMailAdressOfDepartment: ['', [Validators.required, this.validate.ValidMail.bind(this)]],
+      PurchaseDate: ['', Validators.required, this.validate.ValidatePurchaseDate.bind(this)],
+      LifeSpan: ['', [Validators.required, this.validate.ValidateLifespanDate.bind(this)]]
     });
 
     this.sharedData.currentAssetData.subscribe(asset => {

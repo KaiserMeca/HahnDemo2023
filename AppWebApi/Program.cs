@@ -5,6 +5,8 @@ using Domain.Assets.Aggregates;
 using Domain.InterfacesServices;
 using Infrastructure.Services;
 using Microsoft.OpenApi.Models;
+using Shared.DomainEvent;
+using Shared.DomainEvent.Handler;
 
 namespace AppWebApi
 {
@@ -23,6 +25,9 @@ namespace AppWebApi
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAssetRepository, AssetRepository>();
             builder.Services.AddScoped<IAssetService, AssetServices>();
+            builder.Services.AddScoped<IDomainEventBus, DomainEventBus>();
+            builder.Services.AddScoped<IDomainEventHandlerFactory, DomainEventHandlerFactory>();
+           
 
             //Mapper
             var mapConfig = new MapperConfiguration(m =>
@@ -65,10 +70,6 @@ namespace AppWebApi
             });
 
             builder.Services.AddSwaggerGen();
-
-            
-
-            
 
             var app = builder.Build();
 

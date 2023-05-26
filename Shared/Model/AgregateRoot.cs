@@ -1,4 +1,6 @@
 ﻿
+using Shared.DomainEvent;
+
 namespace Shared.Model
 {
     public abstract class AgregateRoot : IEventProvider

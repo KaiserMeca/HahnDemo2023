@@ -1,4 +1,4 @@
-﻿using Shared.Model;
+﻿using Shared.DomainEvent;
 
 namespace Domain.Assets.Aggregates.Events
 {

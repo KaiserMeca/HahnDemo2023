@@ -23,7 +23,7 @@ namespace Infrastructure.Services
            
             foreach (var item in assetsList)
             {
-                item.RemainingLifespan = RemainingLifespan.CreateNew(item.PurchaseDate, item.Lifespan);
+                item.RemainingLifespan = Asset.CreateRemainingLifespan(item.PurchaseDate, item.Lifespan);
             }
 
             var ListAssetDTOs = _mapper.Map<IEnumerable<AssetDTO>>(assetsList);
@@ -59,8 +59,8 @@ namespace Infrastructure.Services
             if (AssetValidation.ValidateOk(asset).Count == 0)
             {
                 //Add DomainEvent
-                UpdateAssetData updateAsset = new UpdateAssetData();
-                asset.AddEvent(updateAsset);
+                ////UpdateAssetData updateAsset = new UpdateAssetData();
+                asset.AddEvent(new UpdateAssetData(asset.Name,asset.DepartmentMail,asset.Department,asset.PurchaseDate,asset.Lifespan));//new
                 return await _repository.UpdateAsync(id, asset);
             }
             else
@@ -72,12 +72,6 @@ namespace Infrastructure.Services
         public async Task<bool> DeleteAsync(Guid id)
         {
             return await _repository.DeleteAsync(id);
-        }
-
-
-        public Task<bool> countryExist(string country)
-        {
-            throw new NotImplementedException();
         }
     }
 }

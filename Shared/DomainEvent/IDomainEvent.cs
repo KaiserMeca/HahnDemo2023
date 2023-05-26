@@ -1,4 +1,4 @@
-﻿namespace Shared.Model
+﻿namespace Shared.DomainEvent
 {
     public interface IDomainEvent
     {

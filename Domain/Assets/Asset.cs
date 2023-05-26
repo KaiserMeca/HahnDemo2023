@@ -3,6 +3,7 @@ using Domain.Assets.Aggregates;
 using Domain.Assets.Aggregates.Events;
 using Domain.Validations;
 using FluentValidation.Results;
+using Shared.DomainEvent;
 
 namespace Domain.Assets
 {
@@ -41,6 +42,11 @@ namespace Domain.Assets
                 State = State.healthy
             };
             return asset;
+        }
+
+        public static RemainingLifespan CreateRemainingLifespan(DateTime purchaseDate, int lifeSpan)
+        {
+            return RemainingLifespan.CreateNew(purchaseDate, lifeSpan);
         }
 
         public new void AddEvent(IDomainEvent eve)

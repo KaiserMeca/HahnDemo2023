@@ -4,6 +4,7 @@ using Domain.Assets.Aggregates.Events;
 using Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Exceptions;
+using Shared.Model;
 
 namespace Infrastructure.Services
 {
@@ -22,7 +23,7 @@ namespace Infrastructure.Services
         {
             if (await _context.Assets.AnyAsync(x => x.Id == asset.Id))
             {
-                throw new RepeatedIdException("The user code already exist");//Ver excepcion
+                throw new RepeatedIdException("The user code already exist");
             }
             if (asset == null)
             {
@@ -30,9 +31,8 @@ namespace Infrastructure.Services
             }
             else
             {
-
                 await _context.Assets.AddAsync(asset);
-                await _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync(asset);
                 return true;
             }
         }
@@ -78,20 +78,24 @@ namespace Infrastructure.Services
                 Asset? assetInDataBase = await _context.Assets.FindAsync(assetDB.Id);
 
                 //Check for unconfirmed domain events in the asset
-                var uncommittedDomainEvents = asset.GetUncommittedDomainEvents();
+                //var uncommittedDomainEvents = asset.GetUncommittedDomainEvents();
 
-                foreach (var domainEvent in uncommittedDomainEvents)
-                {
-                    if (domainEvent is UpdateAssetData updateAssetData)
-                    {
-                        assetInDataBase.ApplyUpdateAssetData(new UpdateAssetData(asset.Name, asset.DepartmentMail, asset.Department, asset.PurchaseDate,
-                            asset.Lifespan));
-                        await _unitOfWork.SaveAsync();
-                    }
-                }
-                //Mark domain events as confirmed
-                asset.MarkDomainEventsAsCommitted();
+                //foreach (var domainEvent in uncommittedDomainEvents)
+                //{
+                //    if (domainEvent is UpdateAssetData updateAssetData)
+                //    {
+                //        assetInDataBase.ApplyUpdateAssetData(new UpdateAssetData(asset.Name, asset.DepartmentMail, asset.Department, asset.PurchaseDate,
+                //            asset.Lifespan));
+                //        await _unitOfWork.SaveAsync(asset);
+                //    }
+                //}
+                ////Mark domain events as confirmed
+                //asset.MarkDomainEventsAsCommitted();
+                await _unitOfWork.SaveAsync(asset);//Eliminar al descomentar lo de arriba
                 return true;
+
+                
+
             }
         }
 
@@ -105,7 +109,7 @@ namespace Infrastructure.Services
             else
             {
                 _context.Assets.Remove(asset);
-                await _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync(asset);
                 return true;
             }
         }

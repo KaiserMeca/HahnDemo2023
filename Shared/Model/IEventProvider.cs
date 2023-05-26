@@ -1,4 +1,6 @@
-﻿namespace Shared.Model
+﻿using Shared.DomainEvent;
+
+namespace Shared.Model
 {
     public interface IEventProvider
     {

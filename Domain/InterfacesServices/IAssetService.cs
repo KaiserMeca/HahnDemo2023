@@ -9,6 +9,5 @@ namespace Domain.InterfacesServices
         Task<bool> AddAsync(AssetDTO asset);
         Task<bool> UpdateAsync(Guid id, AssetDTO asset);
         Task<bool> DeleteAsync(Guid id);
-        Task<bool> countryExist(string country); 
     }
 }

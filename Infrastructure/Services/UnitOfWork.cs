@@ -28,26 +28,12 @@ namespace Infrastructure.Services
             }
         }
 
-        //public async Task SaveAsync(AgregateRoot agregateRoot)
-        //{
-        //    if (_disposed) { throw new ObjectDisposedException(GetType().FullName); }
-
-        //    await _context.SaveChangesAsync();
-        //}
-
         public async Task SaveAsync(AgregateRoot _agregateRoot)
         {
             if (!_disposed)
             {
                 await _context.SaveChangesAsync();
                 ExecuteDomainEvents(_agregateRoot);
-                //This code executes uncommitted domain events using dynamic type casting.
-                //var _uncommittedDomainEvents = _agregateRoot.GetUncommittedDomainEvents();
-                //foreach (var domainEvent in _uncommittedDomainEvents)
-                //{
-                //    var _domainEvent = (dynamic)Convert.ChangeType(domainEvent, domainEvent.GetType());
-                //    _domainEventBus.Execute(_domainEvent);
-                //}
             }
         }
         public async Task SaveAsync()
@@ -74,11 +60,11 @@ namespace Infrastructure.Services
 
         private void ExecuteDomainEvents(AgregateRoot _agregateRoot)
         {
-            var uncommittedDomainEvents = _agregateRoot.GetUncommittedDomainEvents();
-
-            foreach (var domainEvent in uncommittedDomainEvents)
+            var _uncommittedDomainEvents = _agregateRoot.GetUncommittedDomainEvents();
+            foreach (var domainEvent in _uncommittedDomainEvents)
             {
-                _domainEventBus.Execute(domainEvent);
+                var _domainEvent = (dynamic)Convert.ChangeType(domainEvent, domainEvent.GetType());
+                _domainEventBus.Execute(_domainEvent);
             }
         }
         //    private AssetContext _context;

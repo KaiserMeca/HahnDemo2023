@@ -14,16 +14,15 @@ namespace Shared.DomainEvent
         public async Task Execute<T>(T DomainEvent) where T : IDomainEvent
         {
             var handlers = _domainEventHandlerFactory.GetHandlers<T>();
-            foreach (var handler in handlers)
-            {
-                handler.Handle(DomainEvent);
-            }
-            //await Task.Run(() =>
-            //{
-               
-            //}
             
-            //);
+            await Task.Run(() =>
+            {
+                foreach (var handler in handlers)
+                {
+                    handler.Handle(DomainEvent);
+                }
+
+            });
         }
     }
 }

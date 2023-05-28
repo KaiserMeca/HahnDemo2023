@@ -8,8 +8,8 @@ using Microsoft.OpenApi.Models;
 using Shared.DomainEvent;
 using Shared.DomainEvent.Handler;
 using Domain.Assets.Model;
-using Infrastructure.EventHandlers;
 using Domain.Assets.Aggregates.Events;
+using AppWebApi.EventHandlers.MailNotifyAssetAdded;
 
 namespace AppWebApi
 {
@@ -33,6 +33,7 @@ namespace AppWebApi
             builder.Services.AddScoped<NotifyAssetAddedEventHandler>();
             builder.Services.AddScoped<IDomainEventHandler<NotifyAssetAdded>, NotifyAssetAddedEventHandler>();
 
+
             //Mapper
             var mapConfig = new MapperConfiguration(m =>
             {
@@ -41,15 +42,6 @@ namespace AppWebApi
             IMapper mapper = mapConfig.CreateMapper();
             builder.Services.AddSingleton(mapper);
 
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddDefaultPolicy(builder =>
-            //    {
-            //        builder.AllowAnyOrigin()
-            //               .AllowAnyMethod()
-            //               .AllowAnyHeader();
-            //    });
-            //});
             builder.Services.AddCors(options => options.AddPolicy("AllowWebApp",
                 builder => builder.AllowAnyOrigin()
                 .AllowAnyHeader()
@@ -75,19 +67,15 @@ namespace AppWebApi
 
             builder.Services.AddSwaggerGen();
 
-            
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(builder.Environment.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            builder.Services.Configure<EmailConfiguration>(configuration.GetSection("Email"));
+
+
             var app = builder.Build();
-
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var serviceProvider = scope.ServiceProvider;
-            //    var eventHandlerFactory = serviceProvider.GetService<IDomainEventHandlerFactory>();
-            //    var notifyAssetAddedHandlers = eventHandlerFactory.GetHandlers<NotifyAssetAdded>();
-            //}
-
-            //var serviceProvider = app.Services;
-            //DomainEventHandlerFactory EventFactory = new DomainEventHandlerFactory(serviceProvider);
-            //EventFactory.GetHandlers<NotifyAssetAdded>();
 
             using (var scope = app.Services.CreateScope())
             {

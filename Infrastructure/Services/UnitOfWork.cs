@@ -28,34 +28,42 @@ namespace Infrastructure.Services
             }
         }
 
-        public async Task SaveAsync(AgregateRoot agregateRoot)
+        //public async Task SaveAsync(AgregateRoot agregateRoot)
+        //{
+        //    if (_disposed) { throw new ObjectDisposedException(GetType().FullName); }
+
+        //    await _context.SaveChangesAsync();
+        //}
+
+        public async Task SaveAsync(AgregateRoot _agregateRoot)
         {
-            if (_disposed) { throw new ObjectDisposedException(GetType().FullName); }
-
-            await _context.SaveChangesAsync();
-
-            //This code executes uncommitted domain events using dynamic type casting.
-            var _uncommittedDomainEvents = agregateRoot.GetUncommittedDomainEvents();
-            foreach (var domainEvent in _uncommittedDomainEvents)
+            if (!_disposed)
             {
-                var _domainEvent = (dynamic)Convert.ChangeType(domainEvent, domainEvent.GetType());
-                _domainEventBus.Execute(_domainEvent);
+                await _context.SaveChangesAsync();
+                ExecuteDomainEvents(_agregateRoot);
+                //This code executes uncommitted domain events using dynamic type casting.
+                //var _uncommittedDomainEvents = _agregateRoot.GetUncommittedDomainEvents();
+                //foreach (var domainEvent in _uncommittedDomainEvents)
+                //{
+                //    var _domainEvent = (dynamic)Convert.ChangeType(domainEvent, domainEvent.GetType());
+                //    _domainEventBus.Execute(_domainEvent);
+                //}
             }
         }
-
         public async Task SaveAsync()
         {
             if (!_disposed)
             {
                 await _context.SaveChangesAsync();
+                
             }
         }
 
-        public void Dispose(AgregateRoot agregateRoot)
+        public void Dispose()
         {
             try
             {
-                 SaveAsync(agregateRoot);
+                 SaveAsync();
                 _context.Dispose();
             }
             catch (Exception ex)
@@ -64,54 +72,63 @@ namespace Infrastructure.Services
             }
         }
 
+        private void ExecuteDomainEvents(AgregateRoot _agregateRoot)
+        {
+            var uncommittedDomainEvents = _agregateRoot.GetUncommittedDomainEvents();
+
+            foreach (var domainEvent in uncommittedDomainEvents)
+            {
+                _domainEventBus.Execute(domainEvent);
+            }
+        }
         //    private AssetContext _context;
         //    private IAssetRepository? _assetRepository;
         //    private bool _hasError;
 
 
-            //    public UnitOfWork(AssetContext context)
-            //    {
-            //        _context = context;
-            //        _hasError = false;
-            //    }
+        //    public UnitOfWork(AssetContext context)
+        //    {
+        //        _context = context;
+        //        _hasError = false;
+        //    }
 
-            //    /// <summary>
-            //    /// Gets the AssetRepository associated with the UnitOfWork.
-            //    /// </summary>
-            //    public IAssetRepository AssetRepository
-            //    {
-            //        get
-            //        {
-            //            return _assetRepository = _assetRepository ?? new AssetRepository(_context, this);
-            //        }
-            //    }
+        //    /// <summary>
+        //    /// Gets the AssetRepository associated with the UnitOfWork.
+        //    /// </summary>
+        //    public IAssetRepository AssetRepository
+        //    {
+        //        get
+        //        {
+        //            return _assetRepository = _assetRepository ?? new AssetRepository(_context, this);
+        //        }
+        //    }
 
-            //    /// <summary>
-            //    /// Asynchronously saves changes made to the database by the UnitOfWork.
-            //    /// </summary>
-            //    /// <returns>A task that represents the asynchronous save operation.</returns>
-            //    public async Task SaveAsync()
-            //    {
-            //        if (!_hasError)
-            //        {
-            //            await _context.SaveChangesAsync();
-            //        }
-            //    }
+        //    /// <summary>
+        //    /// Asynchronously saves changes made to the database by the UnitOfWork.
+        //    /// </summary>
+        //    /// <returns>A task that represents the asynchronous save operation.</returns>
+        //    public async Task SaveAsync()
+        //    {
+        //        if (!_hasError)
+        //        {
+        //            await _context.SaveChangesAsync();
+        //        }
+        //    }
 
-            //    /// <summary>
-            //    /// Releases all resources used by the UnitOfWork.
-            //    /// </summary>
-            //    public async void Dispose()
-            //    {
-            //        try
-            //        {
-            //            await SaveAsync();
-            //            _context.Dispose();
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            _hasError = true;
-            //        }
-            //    }
+        //    /// <summary>
+        //    /// Releases all resources used by the UnitOfWork.
+        //    /// </summary>
+        //    public async void Dispose()
+        //    {
+        //        try
+        //        {
+        //            await SaveAsync();
+        //            _context.Dispose();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            _hasError = true;
+        //        }
+        //    }
     }
 }

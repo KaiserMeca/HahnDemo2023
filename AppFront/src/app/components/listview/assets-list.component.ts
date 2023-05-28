@@ -29,6 +29,7 @@ export class AssetsListComponent implements OnInit {
     const data = await this.listServices.GetAssets().toPromise();
     if (Array.isArray(data)) {
       this.AssetsList = data as IAsset[];
+      console.log(data);
     } else {
       this.AssetsList = []; 
     }

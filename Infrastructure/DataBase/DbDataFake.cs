@@ -1,5 +1,5 @@
 ﻿using Domain.InterfacesServices;
-using Domain.Assets;
+using Domain.Assets.Model;
 
 namespace Infrastructure.DataBase
 {
@@ -26,28 +26,28 @@ namespace Infrastructure.DataBase
             {
                 Asset.CreateNew(
                     "Computer monitor",
-                    Domain.Assets.Aggregates.Department.HQ,
+                    Department.HQ,
                     "mail1@department1.com",
                     DateTime.UtcNow.Date.AddDays(-random.Next(1, 365)),
                     5
                 ),
                 Asset.CreateNew(
                     "keyboard",
-                    Domain.Assets.Aggregates.Department.Store3,
+                    Department.Store3,
                     "mail2@department2.com",
                     DateTime.UtcNow.Date.AddDays(-random.Next(1, 365)),
                     3
                 ),
                 Asset.CreateNew(
                     "Headphones",
-                    Domain.Assets.Aggregates.Department.Store1,
+                    Department.Store1,
                     "mail3@department3.com",
                     DateTime.UtcNow.Date.AddDays(-382),
                     1
                 ),
                 Asset.CreateNew(
                     "Mouse",
-                    Domain.Assets.Aggregates.Department.MaintenanceStation,
+                    Department.MaintenanceStation,
                     "mail4@department4.com",
                     DateTime.UtcNow.Date.AddDays(-635),
                     2

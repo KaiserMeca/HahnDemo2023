@@ -1,4 +1,4 @@
-﻿using Domain.Assets;
+﻿using Domain.Assets.Model;
 
 namespace Domain.InterfacesServices
 {
@@ -9,7 +9,5 @@ namespace Domain.InterfacesServices
         Task<bool> AddAsync(Asset asset);
         Task<bool> UpdateAsync(Guid id, Asset asset);
         Task<bool> DeleteAsync(Guid id);
-
-        Task<bool> countryExist(string country); //aggregate query
     }
 }

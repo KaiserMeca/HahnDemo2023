@@ -1,10 +1,11 @@
 ﻿using Domain.InterfacesServices;
-using Domain.Assets;
 using Domain.Assets.Aggregates.Events;
 using Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Exceptions;
 using Shared.Model;
+using System;
+using Domain.Assets.Model;
 
 namespace Infrastructure.Services
 {
@@ -39,17 +40,23 @@ namespace Infrastructure.Services
 
         public async Task<IEnumerable<Asset>> GetAllAsync()
         {
-            var ListAssets = await _context.Assets.ToListAsync();
-            if (ListAssets == null)
-            {
-                return new List<Asset>();
-            }
-            else
-            {
-
-                return ListAssets;
-            }
+            var assets = await _context.Assets.ToListAsync();
+            return assets ?? new List<Asset>();
         }
+
+        //public async Task<IEnumerable<Asset>> GetAllAsync()
+        //{
+        //    var ListAssets = await _context.Assets.ToListAsync();
+        //    if (ListAssets == null)
+        //    {
+        //        return new List<Asset>();
+        //    }
+        //    else
+        //    {
+
+        //        return ListAssets;
+        //    }
+        //}
 
         public async Task<Asset> GetForIdAsync(Guid id)
         {
@@ -66,38 +73,49 @@ namespace Infrastructure.Services
 
         public async Task<bool> UpdateAsync(Guid id, Asset asset)
         {
-            Asset? assetDB = await _context.Assets.FirstOrDefaultAsync(a => a.Id == id);
-
+            Asset? assetDB = await _context.Assets.FindAsync(asset.Id);
             if (assetDB == null)
             {
                 return false;
             }
 
-            else
-            {
-                Asset? assetInDataBase = await _context.Assets.FindAsync(assetDB.Id);
+            assetDB.ApplyUpdateAssetData(new UpdateAssetData(asset.Name, asset.DepartmentMail, asset.Department, asset.PurchaseDate, asset.Lifespan));
+            await _unitOfWork.SaveAsync();
+            assetDB.MarkDomainEventsAsCommitted();
 
-                //Check for unconfirmed domain events in the asset
-                //var uncommittedDomainEvents = asset.GetUncommittedDomainEvents();
-
-                //foreach (var domainEvent in uncommittedDomainEvents)
-                //{
-                //    if (domainEvent is UpdateAssetData updateAssetData)
-                //    {
-                //        assetInDataBase.ApplyUpdateAssetData(new UpdateAssetData(asset.Name, asset.DepartmentMail, asset.Department, asset.PurchaseDate,
-                //            asset.Lifespan));
-                //        await _unitOfWork.SaveAsync(asset);
-                //    }
-                //}
-                ////Mark domain events as confirmed
-                //asset.MarkDomainEventsAsCommitted();
-                await _unitOfWork.SaveAsync(asset);//Eliminar al descomentar lo de arriba
-                return true;
-
-                
-
-            }
+            return true;
         }
+
+        //public async Task<bool> UpdateAsync(Guid id, Asset asset)
+        //{
+        //    Asset? assetDB = await _context.Assets.FirstOrDefaultAsync(a => a.Id == id);
+
+        //    if (assetDB == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    else
+        //    {
+        //        Asset? assetInDataBase = await _context.Assets.FindAsync(assetDB.Id);
+        //        //Check for unconfirmed domain events in the asset
+        //        var uncommittedDomainEvents = asset.GetUncommittedDomainEvents();
+
+        //        foreach (var domainEvent in uncommittedDomainEvents)
+        //        {
+        //            if (domainEvent is UpdateAssetData updateAssetData)
+        //            {
+        //                assetInDataBase.ApplyUpdateAssetData(new UpdateAssetData(asset.Name, 
+        //                    asset.DepartmentMail, asset.Department, asset.PurchaseDate,
+        //                    asset.Lifespan));
+        //                await _unitOfWork.SaveAsync();
+        //            }
+        //        }
+        //        //Mark domain events as confirmed
+        //        asset.MarkDomainEventsAsCommitted();
+        //        return true;
+        //    }
+        //}
 
         public async Task<bool> DeleteAsync(Guid id)
         {
@@ -109,14 +127,9 @@ namespace Infrastructure.Services
             else
             {
                 _context.Assets.Remove(asset);
-                await _unitOfWork.SaveAsync(asset);
+                await _unitOfWork.SaveAsync();
                 return true;
             }
-        }
-
-        public async Task<bool> countryExist(string country)
-        {
-            throw new NotImplementedException();
         }
     }
 }

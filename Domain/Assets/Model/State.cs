@@ -1,4 +1,4 @@
-﻿namespace Domain.Assets.Aggregates
+﻿namespace Domain.Assets.Model
 {
     public enum State
     {

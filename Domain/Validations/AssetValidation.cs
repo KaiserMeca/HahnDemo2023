@@ -1,4 +1,4 @@
-﻿using Domain.Assets;
+﻿using Domain.Assets.Model;
 using FluentValidation;
 using FluentValidation.Results;
 
@@ -6,11 +6,11 @@ namespace Domain.Validations
 {
     public class AssetValidation : AbstractValidator<Asset>
     {
-        public static List<string> errors = new List<string>();
+        public static List<string> Errors = new List<string>();
 
         public AssetValidation()
         {
-            errors.Clear();
+            Errors.Clear();
             RuleFor(x => x.Name)
                 .MinimumLength(5)
                 .WithMessage("The field cannot be less than 5 characters");
@@ -48,14 +48,14 @@ namespace Domain.Validations
             {
                 foreach (var failure in validationResults.Errors)
                 {
-                    errors.Add(failure.ErrorMessage);
+                    Errors.Add(failure.ErrorMessage);
                 }
 
-                return errors;
+                return Errors;
             }
             else
             {
-                return errors;//If there are no errors, it returns the empty list.
+                return Errors;//If there are no errors, it returns the empty list.
             }
         }
     }

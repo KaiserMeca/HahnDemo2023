@@ -1,7 +1,7 @@
 ﻿using Domain.InterfacesServices;
-using Domain.Assets;
 using Domain.Validations;
 using Microsoft.AspNetCore.Mvc;
+using Domain.Assets.Model;
 
 namespace AppWebApi.Controllers
 {
@@ -19,19 +19,20 @@ namespace AppWebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AssetDTO>>> GetAll()
         {
-            var Assets = await _services.GetAllAsync();
-            if (Assets == null || !Assets.Any())
+            var assets = await _services.GetAllAsync();
+            if (assets == null || !assets.Any())
             {
                 return Ok(new { message = "Empty" });
             }
-            return Ok(Assets);
+            return Ok(assets);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddAsset(AssetDTO asset)
         {
             if (!await _services.AddAsync(asset))
             {
-                return BadRequest(new { message = "Validation Error", errors = AssetValidation.errors });
+                return BadRequest(new { message = "Validation Error", errors = AssetValidation.Errors });
             }
             else
             {
@@ -55,19 +56,33 @@ namespace AppWebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] AssetDTO asset)
+        public async Task<IActionResult> Put(Guid id, [FromBody] AssetDTO assetDTO)
         {
-            if (!await _services.UpdateAsync(id, asset))
-            {
-                return BadRequest(new { message = "The asset could not be updated"
-                , errors = AssetValidation.errors
-                });
-            }
-            else
+            if (await _services.UpdateAsync(id, assetDTO))
             {
                 return Ok(new { message = "Asset updated" });
             }
+            return BadRequest(new
+            {
+                message = "The asset could not be updated",
+                errors = AssetValidation.Errors
+            });
         }
+
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Put(Guid id, [FromBody] AssetDTO asset)
+        //{
+        //    if (!await _services.UpdateAsync(id, asset))
+        //    {
+        //        return BadRequest(new { message = "The asset could not be updated"
+        //        , errors = AssetValidation.errors
+        //        });
+        //    }
+        //    else
+        //    {
+        //        return Ok(new { message = "Asset updated" });
+        //    }
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)

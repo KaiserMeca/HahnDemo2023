@@ -1,4 +1,5 @@
-﻿using Shared.DomainEvent;
+﻿using Domain.Assets.Model;
+using Shared.DomainEvent;
 
 namespace Domain.Assets.Aggregates.Events
 {
@@ -17,6 +18,14 @@ namespace Domain.Assets.Aggregates.Events
             Department = department;
             PurchaseDate = purchaseDate;
             LifeSpan = lifeSpan;
+        }
+        public UpdateAssetData(UpdateAssetData updateAssetData)
+        {
+            Name = updateAssetData.Name;
+            DepartmentMail = updateAssetData.DepartmentMail;
+            Department = updateAssetData.Department;
+            PurchaseDate = updateAssetData.PurchaseDate;
+            LifeSpan = updateAssetData.LifeSpan;
         }
         public UpdateAssetData()
         {

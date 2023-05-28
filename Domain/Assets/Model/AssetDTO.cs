@@ -1,6 +1,4 @@
-﻿using Domain.Assets.Aggregates;
-
-namespace Domain.Assets
+﻿namespace Domain.Assets.Model
 {
     public class AssetDTO
     {

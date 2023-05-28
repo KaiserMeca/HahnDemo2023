@@ -9,7 +9,7 @@ export class AssetNameValidator extends Validator<Name> {
     super();
 
     this.ruleFor('name')
-      .notEmpty().minLength(5)
+      .notEmpty().minLength(5);
   }
 }
 

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Domain.InterfacesServices;
-using Domain.Assets;
 using Domain.Assets.Aggregates.Events;
 using Domain.Validations;
+using Domain.Assets.Model;
 
 namespace Infrastructure.Services
 {
@@ -19,16 +19,37 @@ namespace Infrastructure.Services
 
         public async Task<IEnumerable<AssetDTO>> GetAllAsync()
         {
-            var assetsList = await _repository.GetAllAsync();
-           
-            foreach (var item in assetsList)
+            var assets = await _repository.GetAllAsync();
+            var assetDTOs = _mapper.Map<IEnumerable<AssetDTO>>(assets);
+
+            foreach (var assetDTO in assetDTOs)
             {
-                item.RemainingLifespan = Asset.CreateRemainingLifespan(item.PurchaseDate, item.Lifespan);
+                assetDTO.RemainingLifespan = Asset.CreateRemainingLifespan(assetDTO.PurchaseDate, assetDTO.Lifespan);
+                if (assetDTO.RemainingLifespan.RemainingDuration == "Timed out")
+                {
+                    assetDTO.State = State.Broke;
+                }
+                else
+                {
+                    assetDTO.State = State.healthy;
+                }
             }
 
-            var ListAssetDTOs = _mapper.Map<IEnumerable<AssetDTO>>(assetsList);
-            return ListAssetDTOs;
+            return assetDTOs;
         }
+
+        //public async Task<IEnumerable<AssetDTO>> GetAllAsync()
+        //{
+        //    var assetsList = await _repository.GetAllAsync();
+
+        //    foreach (var item in assetsList)
+        //    {
+        //        item.RemainingLifespan = Asset.CreateRemainingLifespan(item.PurchaseDate, item.Lifespan);
+        //    }
+
+        //    var ListAssetDTOs = _mapper.Map<IEnumerable<AssetDTO>>(assetsList);
+        //    return ListAssetDTOs;
+        //}
 
         public async Task<AssetDTO> GetForIdAsync(Guid id)
         {
@@ -43,8 +64,8 @@ namespace Infrastructure.Services
             var assetMap = _mapper.Map<Asset>(assetDTO);
             if (AssetValidation.ValidateOk(assetMap).Count == 0 )
             {
-                Asset asset = Asset.CreateNew(assetMap.Name, assetMap.Department, assetMap.DepartmentMail,
-                    assetMap.PurchaseDate,assetMap.Lifespan);
+                Asset asset = Asset.CreateNew(assetMap.Name, assetMap.Department, assetMap.DepartmentMail, assetMap.PurchaseDate, assetMap.Lifespan);
+                asset.AddEvent(new NotifyAssetAdded(assetMap.Name, assetMap.Department, assetMap.DepartmentMail));
                 return _repository.AddAsync(asset);
             }
             else
@@ -56,18 +77,30 @@ namespace Infrastructure.Services
         public async Task<bool> UpdateAsync(Guid id, AssetDTO assetDTO)
         {
             var asset = _mapper.Map<Asset>(assetDTO);
-            if (AssetValidation.ValidateOk(asset).Count == 0)
+            var validationErrors = AssetValidation.ValidateOk(asset); 
+            if (validationErrors.Count > 0)
             {
-                //Add DomainEvent
-                ////UpdateAssetData updateAsset = new UpdateAssetData();
-                asset.AddEvent(new UpdateAssetData(asset.Name,asset.DepartmentMail,asset.Department,asset.PurchaseDate,asset.Lifespan));//new
-                return await _repository.UpdateAsync(id, asset);
+                return false;
             }
-            else
-            {
-                return await Task.FromResult(false);
-            }
+
+            asset.AddEvent(new UpdateAssetData());
+            return await _repository.UpdateAsync(id, asset);
         }
+
+        //public async Task<bool> UpdateAsync(Guid id, AssetDTO assetDTO)
+        //{
+        //    var asset = _mapper.Map<Asset>(assetDTO);
+        //    if (AssetValidation.ValidateOk(asset).Count == 0)
+        //    {
+        //        //Add DomainEvent
+        //        asset.AddEvent(new UpdateAssetData());
+        //        return await _repository.UpdateAsync(id, asset);
+        //    }
+        //    else
+        //    {
+        //        return await Task.FromResult(false);
+        //    }
+        //}
 
         public async Task<bool> DeleteAsync(Guid id)
         {

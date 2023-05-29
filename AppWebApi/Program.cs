@@ -42,6 +42,11 @@ namespace AppWebApi
             IMapper mapper = mapConfig.CreateMapper();
             builder.Services.AddSingleton(mapper);
 
+            builder.Services.AddLogging(config =>
+            {
+                config.AddConsole();
+            });
+
             builder.Services.AddCors(options => options.AddPolicy("AllowWebApp",
                 builder => builder.AllowAnyOrigin()
                 .AllowAnyHeader()

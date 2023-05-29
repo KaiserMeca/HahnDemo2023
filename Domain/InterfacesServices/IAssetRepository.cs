@@ -1,4 +1,5 @@
 ﻿using Domain.Assets.Model;
+using Shared.Model;
 
 namespace Domain.InterfacesServices
 {

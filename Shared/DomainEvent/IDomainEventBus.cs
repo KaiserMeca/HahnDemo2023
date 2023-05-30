@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a domain event bus.
     /// </summary>
-    public interface IDomainEventBus
+    public interface IDomainEventBus 
     {
         /// <summary>
         /// Executes the specified domain event asynchronously.

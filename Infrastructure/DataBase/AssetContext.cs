@@ -6,15 +6,15 @@ namespace Infrastructure.DataBase
     public class AssetContext : DbContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AssetContext"/> class.
+        /// Initializes a new instance of the <see cref="AssetContext"/> class
         /// </summary>
-        /// <param name="options">The options for configuring the context.</param>
+        /// <param name="options">The options for configuring the context</param>
         public AssetContext(DbContextOptions<AssetContext> options) : base(options)
         {
         }
 
         /// <summary>
-        /// Gets or sets the DbSet of assets in the context.
+        /// Gets or sets the DbSet of assets in the context
         /// </summary>
         public DbSet<Asset> Assets { get; set; }
 

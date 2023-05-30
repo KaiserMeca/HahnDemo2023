@@ -5,17 +5,28 @@ using Domain.Assets.Models;
 
 namespace AppWebApi.Controllers
 {
+    /// <summary>
+    /// Controller for managing assets
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AssetsController : ControllerBase
     {
         private readonly IAssetService _services;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AssetsController"/> class
+        /// </summary>
+        /// <param name="services">The asset service</param>
         public AssetsController(IAssetService services)
         {
             _services = services;
         }
 
+        /// <summary>
+        /// Retrieves all assets
+        /// </summary>
+        /// <returns>A list of assets</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AssetDTO>>> GetAll()
         {
@@ -27,6 +38,11 @@ namespace AppWebApi.Controllers
             return Ok(assets);
         }
 
+        /// <summary>
+        /// Adds a new asset.
+        /// </summary>
+        /// <param name="asset">The asset to add</param>
+        /// <returns>An action result indicating the success of the operation</returns>
         [HttpPost]
         public async Task<IActionResult> AddAsset(AssetDTO asset)
         {
@@ -41,6 +57,12 @@ namespace AppWebApi.Controllers
                 return Created(url, new { message = "Asset Created" });
             }
         }
+
+        /// <summary>
+        /// Retrieves an asset by its ID
+        /// </summary>
+        /// <param name="id">The ID of the asset to retrieve</param>
+        /// <returns>An action result containing the asset if found, or an error message if not found</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsset(Guid id)
         {
@@ -55,6 +77,12 @@ namespace AppWebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates an asset by its ID
+        /// </summary>
+        /// <param name="id">The ID of the asset to update</param>
+        /// <param name="assetDTO">The updated asset data</param>
+        /// <returns>An action result indicating the success of the operation</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] AssetDTO assetDTO)
         {
@@ -69,21 +97,11 @@ namespace AppWebApi.Controllers
             });
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> Put(Guid id, [FromBody] AssetDTO asset)
-        //{
-        //    if (!await _services.UpdateAsync(id, asset))
-        //    {
-        //        return BadRequest(new { message = "The asset could not be updated"
-        //        , errors = AssetValidation.errors
-        //        });
-        //    }
-        //    else
-        //    {
-        //        return Ok(new { message = "Asset updated" });
-        //    }
-        //}
-
+        /// <summary>
+        /// Deletes an asset by its ID
+        /// </summary>
+        /// <param name="id">The ID of the asset to delete</param>
+        /// <returns>An action result indicating the success of the operation</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -97,5 +115,4 @@ namespace AppWebApi.Controllers
             }
         }
     }
-
 }

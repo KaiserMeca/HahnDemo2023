@@ -1,8 +1,10 @@
-﻿
-using Domain.Assets.ValueObjectModels;
+﻿using Domain.Assets.ValueObjectModels;
 
 namespace Domain.Assets.Models
 {
+    /// <summary>
+    /// Represents an Asset Data Transfer Object (DTO).
+    /// </summary>
     public class AssetDTO
     {
         public Guid? Id { get; set; }

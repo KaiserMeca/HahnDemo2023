@@ -8,13 +8,26 @@ using Shared.DomainEvent;
 using Shared.DomainEvent.Handler;
 using Domain.Assets.Models;
 using Domain.Assets.ValueObjectModels;
-using Infrastructure.EventHandlers.MailNotifyAssetAdded;
 using Domain.Assets.Aggregates.Events;
+using Infrastructure.EventHandlers;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Reflection;
 
 namespace AppWebApi
 {
+    /// <summary>
+    /// The entry point class for the application.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// The main method that starts the application
+        /// </summary>
+        /// <param name="args">Command line arguments</param>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -32,7 +45,6 @@ namespace AppWebApi
             builder.Services.AddScoped<IDomainEventHandlerFactory, DomainEventHandlerFactory>();
             builder.Services.AddScoped<NotifyAssetAddedEventHandler>();
             builder.Services.AddScoped<IDomainEventHandler<NotifyAssetAdded>, NotifyAssetAddedEventHandler>();
-
 
             //Mapper
             var mapConfig = new MapperConfiguration(m =>
@@ -53,6 +65,7 @@ namespace AppWebApi
                 .AllowAnyMethod()));
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -68,6 +81,9 @@ namespace AppWebApi
                     },
                     Version = "v1"
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
 
             builder.Services.AddSwaggerGen();
@@ -101,7 +117,6 @@ namespace AppWebApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

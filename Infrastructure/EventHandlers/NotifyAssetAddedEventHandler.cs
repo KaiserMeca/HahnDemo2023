@@ -9,25 +9,37 @@ using Microsoft.Extensions.Logging;
 using Infrastructure.Exceptions;
 using Domain.Assets.ValueObjectModels;
 
-namespace Infrastructure.EventHandlers.MailNotifyAssetAdded
+namespace Infrastructure.EventHandlers
 {
+    /// <summary>
+    /// Event handler for notifying asset addition
+    /// </summary>
     public class NotifyAssetAddedEventHandler : IDomainEventHandler<NotifyAssetAdded>
     {
         private readonly EmailConfiguration _emailConfiguration;
         private readonly ILogger<NotifyAssetAddedEventHandler> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotifyAssetAddedEventHandler"/> class
+        /// </summary>
+        /// <param name="emailConfiguration">The email configuration options</param>
+        /// <param name="logger">The logger.</param>
         public NotifyAssetAddedEventHandler(IOptions<EmailConfiguration> emailConfiguration, ILogger<NotifyAssetAddedEventHandler> logger)
         {
             _emailConfiguration = emailConfiguration.Value;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Handles the asset added event by sending a notification email
+        /// </summary>
+        /// <param name="domainEvent">The asset added event</param>
         public void Handle(NotifyAssetAdded domainEvent)
         {
             try
             {
                 var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse(_emailConfiguration.UserName.ToLower()));
+                email.From.Add(MailboxAddress.Parse(_emailConfiguration.UserName));
                 email.To.Add(MailboxAddress.Parse(domainEvent.DepartmentMail));
                 email.Subject = "New Asset in " + domainEvent.Department + " department.";
                 email.Body = new TextPart(TextFormat.Text)

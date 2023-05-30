@@ -2,12 +2,23 @@
 
 namespace Domain.Assets.ValueObjectModels
 {
-    public class RemainingLifespan : ValueObject ,IDomainEntity
+    /// <summary>
+    /// Represents the remaining lifespan value object
+    /// </summary>
+    public class RemainingLifespan : ValueObject, IDomainEntity
     {
         public DateTime PurchaseDate { get; private set; }
+
         public int Lifespan { get; private set; }
+
         public string? RemainingDuration { get; private set; }
 
+        /// <summary>
+        /// Creates a new instance of RemainingLifespan with the specified purchase date and lifespan
+        /// </summary>
+        /// <param name="purchaseDate">The purchase date of the asset</param>
+        /// <param name="lifespan">The lifespan in years</param>
+        /// <returns>A new instance of RemainingLifespan</returns>
         public static RemainingLifespan CreateNew(DateTime purchaseDate, int lifespan)
         {
             DateTime expirationDate = purchaseDate.AddYears(lifespan);
@@ -26,6 +37,10 @@ namespace Domain.Assets.ValueObjectModels
             };
         }
 
+        /// <summary>
+        /// Retrieves the atomic values of the remaining lifespan
+        /// </summary>
+        /// <returns>An enumeration of the atomic values</returns>
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return PurchaseDate;
@@ -34,6 +49,13 @@ namespace Domain.Assets.ValueObjectModels
         }
 
         #region ValidateTimedOut
+        /// <summary>
+        /// Validates if the remaining lifespan has timed out
+        /// </summary>
+        /// <param name="y">The remaining years</param>
+        /// <param name="m">The remaining months</param>
+        /// <param name="d">The remaining days</param>
+        /// <returns>A string representing the remaining duration or "Timed out"</returns>
         private static string ValidateTimedOut(int y, int m, int d)
         {
             if (y == 0 && m == 0 && d == 0 || y < 0 || m < 0 || d < 0)
@@ -58,4 +80,3 @@ namespace Domain.Assets.ValueObjectModels
         #endregion
     }
 }
-

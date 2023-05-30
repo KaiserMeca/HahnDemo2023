@@ -1,8 +1,8 @@
 ﻿using Shared.Model;
 
-namespace Domain.Assets.Model
+namespace Domain.Assets.ValueObjectModels
 {
-    public class RemainingLifespan : ValueObject
+    public class RemainingLifespan : ValueObject ,IDomainEntity
     {
         public DateTime PurchaseDate { get; private set; }
         public int Lifespan { get; private set; }

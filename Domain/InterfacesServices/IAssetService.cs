@@ -1,4 +1,4 @@
-﻿using Domain.Assets.Model;
+﻿using Domain.Assets.Models;
 
 namespace Domain.InterfacesServices
 {

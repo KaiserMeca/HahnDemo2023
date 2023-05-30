@@ -1,15 +1,15 @@
 using Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Domain.Assets.Aggregates;
 using Domain.InterfacesServices;
 using Infrastructure.Services;
 using Microsoft.OpenApi.Models;
 using Shared.DomainEvent;
 using Shared.DomainEvent.Handler;
-using Domain.Assets.Model;
+using Domain.Assets.Models;
+using Domain.Assets.ValueObjectModels;
+using Infrastructure.EventHandlers.MailNotifyAssetAdded;
 using Domain.Assets.Aggregates.Events;
-using AppWebApi.EventHandlers.MailNotifyAssetAdded;
 
 namespace AppWebApi
 {
@@ -78,7 +78,6 @@ namespace AppWebApi
                 .Build();
 
             builder.Services.Configure<EmailConfiguration>(configuration.GetSection("Email"));
-
 
             var app = builder.Build();
 

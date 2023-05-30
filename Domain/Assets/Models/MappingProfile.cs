@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Domain.Assets.Model
+namespace Domain.Assets.Models
 {
     public class MappingProfile : Profile
     {

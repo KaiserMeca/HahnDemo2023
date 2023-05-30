@@ -2,7 +2,8 @@
 using Domain.InterfacesServices;
 using Domain.Assets.Aggregates.Events;
 using Domain.Validations;
-using Domain.Assets.Model;
+using Domain.Assets.Models;
+using Domain.Assets.ValueObjectModels;
 
 namespace Infrastructure.Services
 {
@@ -86,21 +87,6 @@ namespace Infrastructure.Services
             asset.AddEvent(new UpdateAssetData());
             return await _repository.UpdateAsync(id, asset);
         }
-
-        //public async Task<bool> UpdateAsync(Guid id, AssetDTO assetDTO)
-        //{
-        //    var asset = _mapper.Map<Asset>(assetDTO);
-        //    if (AssetValidation.ValidateOk(asset).Count == 0)
-        //    {
-        //        //Add DomainEvent
-        //        asset.AddEvent(new UpdateAssetData());
-        //        return await _repository.UpdateAsync(id, asset);
-        //    }
-        //    else
-        //    {
-        //        return await Task.FromResult(false);
-        //    }
-        //}
 
         public async Task<bool> DeleteAsync(Guid id)
         {

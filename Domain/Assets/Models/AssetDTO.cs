@@ -1,4 +1,7 @@
-﻿namespace Domain.Assets.Model
+﻿
+using Domain.Assets.ValueObjectModels;
+
+namespace Domain.Assets.Models
 {
     public class AssetDTO
     {

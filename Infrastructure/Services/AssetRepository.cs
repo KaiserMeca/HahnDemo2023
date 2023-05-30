@@ -3,7 +3,7 @@ using Domain.Assets.Aggregates.Events;
 using Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Exceptions;
-using Domain.Assets.Model;
+using Domain.Assets.Models;
 
 namespace Infrastructure.Services
 {

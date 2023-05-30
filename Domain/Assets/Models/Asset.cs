@@ -4,8 +4,9 @@ using Domain.Validations;
 using FluentValidation.Results;
 using Shared.DomainEvent;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Assets.ValueObjectModels;
 
-namespace Domain.Assets.Model
+namespace Domain.Assets.Models
 {
     public class Asset : AgregateRoot, IDomainEntity
     {

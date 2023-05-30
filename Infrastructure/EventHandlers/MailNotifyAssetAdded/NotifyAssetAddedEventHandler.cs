@@ -7,8 +7,9 @@ using MimeKit.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Infrastructure.Exceptions;
+using Domain.Assets.ValueObjectModels;
 
-namespace AppWebApi.EventHandlers.MailNotifyAssetAdded
+namespace Infrastructure.EventHandlers.MailNotifyAssetAdded
 {
     public class NotifyAssetAddedEventHandler : IDomainEventHandler<NotifyAssetAdded>
     {
@@ -26,7 +27,7 @@ namespace AppWebApi.EventHandlers.MailNotifyAssetAdded
             try
             {
                 var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse(_emailConfiguration.UserName));
+                email.From.Add(MailboxAddress.Parse(_emailConfiguration.UserName.ToLower()));
                 email.To.Add(MailboxAddress.Parse(domainEvent.DepartmentMail));
                 email.Subject = "New Asset in " + domainEvent.Department + " department.";
                 email.Body = new TextPart(TextFormat.Text)

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an abstract class for a value object.
     /// </summary>
-    public abstract class ValueObject
+    public abstract class ValueObject 
     {
         /// <summary>
         /// Gets the atomic values of the value object.

@@ -1,7 +1,7 @@
 ﻿using Domain.InterfacesServices;
 using Domain.Validations;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Assets.Model;
+using Domain.Assets.Models;
 
 namespace AppWebApi.Controllers
 {

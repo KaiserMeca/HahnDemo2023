@@ -1,5 +1,5 @@
 ﻿using Domain.InterfacesServices;
-using Domain.Assets.Model;
+using Domain.Assets.Models;
 
 namespace Infrastructure.DataBase
 {

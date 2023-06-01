@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AssetServiceService } from 'src/app/services/webservices/asset-service.service';
+import { RequestService } from 'src/app/services/CrudServices/RequestService';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +11,7 @@ export class NavbarComponent {
 
   activeLang: string = 'en-US';
 
-  constructor(private translate: TranslateService, private assetService: AssetServiceService) {
+  constructor(private translate: TranslateService, private assetService: RequestService) {
   }
   changeLang(lang: string) {
     this.translate.use(lang);

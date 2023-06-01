@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IAsset } from 'src/app/model/IAsset';
-import { AssetServiceService } from 'src/app/services/webservices/asset-service.service';
+import { RequestService } from 'src/app/services/CrudServices/RequestService';
 import { SharedDataService } from '../../services/sharedataservices/SharedData';
 import { IListServices } from '../../services/interfaces/IListServices';
 
@@ -20,7 +20,7 @@ export class AssetsListComponent implements OnInit {
   selectId: string = "";
   selectName: string = "";
 
-  constructor(private _AssetServices: AssetServiceService, private toastr: ToastrService, private router: Router,
+  constructor(private _AssetServices: RequestService, private toastr: ToastrService, private router: Router,
     private sharedData: SharedDataService, @Inject('IListServicesToken') private listServices: IListServices) {
     this.sharedData.currentAssetData.next({ id: null });
   }
@@ -29,7 +29,6 @@ export class AssetsListComponent implements OnInit {
     const data = await this.listServices.GetAssets().toPromise();
     if (Array.isArray(data)) {
       this.AssetsList = data as IAsset[];
-      console.log(data);
     } else {
       this.AssetsList = []; 
     }

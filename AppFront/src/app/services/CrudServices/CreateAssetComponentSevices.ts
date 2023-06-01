@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
-//import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { ICreateServices } from "src/app/services/interfaces/ICreateServices";
 import { IAsset } from '../../model/IAsset';
-import { AssetServiceService } from './asset-service.service';
+import { RequestService } from './RequestService';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class CreateServices implements ICreateServices {
+export class CreateAssetComponentSevices implements ICreateServices {
 
   message: string = "";
 
-  constructor(private _AssetServices: AssetServiceService) {
+  constructor(private _AssetServices: RequestService) {
   }
- 
   async AddAsset(asset: IAsset): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       this._AssetServices.postAsset(asset).subscribe(data => {

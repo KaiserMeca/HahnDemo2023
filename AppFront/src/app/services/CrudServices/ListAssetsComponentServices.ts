@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { IAsset } from "src/app/model/IAsset";
-import { AssetServiceService } from "./asset-service.service";
+import { RequestService } from "./RequestService";
 import { IListServices } from "../interfaces/IListServices";
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class ListServices implements IListServices {
- /* AssetsList: IAsset[] = [];*/
+export class ListAssetsComponentServices implements IListServices {
   message: string = "";
-  constructor(private _AssetServices: AssetServiceService, private translateService: TranslateService) {
+  constructor(private _AssetServices: RequestService, private translateService: TranslateService) {
   }
 
   GetAssets(): Observable<IAsset[]> {

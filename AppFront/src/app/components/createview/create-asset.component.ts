@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { AssetServiceService } from 'src/app/services/webservices/asset-service.service';
+import { RequestService } from 'src/app/services/CrudServices/RequestService';
 import { IAsset } from 'src/app/model/IAsset';
 import { ICreateServices } from 'src/app/services/interfaces/ICreateServices';
 import { SharedDataService } from 'src/app/services/sharedataservices/SharedData';
@@ -25,10 +25,9 @@ export class CreateAssetComponent implements OnInit {
   loadingCountry = false;
   asset: IAsset | undefined;
   register: FormGroup;
-  //departmentEdit: string = "";
   ViewEditButton: boolean = false;
 
-  constructor(private _AssetServices: AssetServiceService, private formBuilder: FormBuilder, private toastr: ToastrService,
+  constructor(private _AssetServices: RequestService, private formBuilder: FormBuilder, private toastr: ToastrService,
     private router: Router, private sharedData: SharedDataService, @Inject('ICreateServicesToken') private createServices: ICreateServices,
     private translateService: TranslateService, @Inject('IValidatorServicesToken') private validate: IValidatorServices) {
 
@@ -53,7 +52,6 @@ export class CreateAssetComponent implements OnInit {
           assetName: asset.name,
           EMailAdressOfDepartment: asset.departmentMail,
           department: this.selectedValue,
-          //countryOfDepartment: asset.countryOfDepartment,
           PurchaseDate: this.createServices.FormattedDate(asset),
           LifeSpan: asset.lifespan,
         });
@@ -69,7 +67,6 @@ export class CreateAssetComponent implements OnInit {
       name: this.register.value.assetName,
       department: parseInt(this.register.value.department),
       departmentMail: this.register.value.EMailAdressOfDepartment,
-      //countryOfDepartment: this.register.value.countryOfDepartment,
       purchaseDate: this.register.value.PurchaseDate,
       lifespan: this.register.value.LifeSpan,
       RemainingLifespan: {}
@@ -91,28 +88,12 @@ export class CreateAssetComponent implements OnInit {
   selectedValue: string = "";
   purchaseDateError: string = '';
 
-  //onPurchaseDateBlur() {
-  //  const purchaseDate = this.register.value.PurchaseDate;
-  //  const oneYearAgo = new Date();
-  //  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
-  //  if (purchaseDate < oneYearAgo.toISOString()) {
-  //    this.translateService.get('PurchaseError').subscribe((translatedMessage: string) => {
-  //      this.purchaseDateError = translatedMessage
-  //    });
-
-  //  } else {
-  //    this.purchaseDateError = '';
-  //  }
-  //}
-  
   PutAsset() {
     const asset: IAsset = {
       id: this.IdForEdit,
       name: this.register.value.assetName,
       department: parseInt(this.register.value.department),
       departmentMail: this.register.value.EMailAdressOfDepartment,
-      //countryOfDepartment: this.register.value.countryOfDepartment,
       purchaseDate: this.register.value.PurchaseDate,
       lifespan: this.register.value.LifeSpan,
       RemainingLifespan: {}
@@ -131,7 +112,6 @@ export class CreateAssetComponent implements OnInit {
 
   }
   cancelEdit() {
-    //this.departmentEdit = '';
     this.ViewEditButton = false;
     this.register.reset;
     this.router.navigate(["/app-assets-list"]);
@@ -139,6 +119,5 @@ export class CreateAssetComponent implements OnInit {
 
   Reset() {
     this.register.reset();
-    //this.departmentEdit = '';
   }
 }

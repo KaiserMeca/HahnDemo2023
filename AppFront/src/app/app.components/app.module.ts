@@ -9,15 +9,14 @@ import { ToastrModule } from 'ngx-toastr';
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 //Components
 import { AppComponent } from './app.component';
 import { CreateAssetComponent } from 'src/app/components/createview/create-asset.component';
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { AssetsListComponent } from '../components/listview/assets-list.component';
 import { LoadingComponent } from '../components/loading/loading.component';
-import { ListServices } from '../services/webservices/ListServices';
-import { CreateServices } from '../services/webservices/CreateSevices';
+import { ListAssetsComponentServices } from '../services/CrudServices/ListAssetsComponentServices';
+import { CreateAssetComponentSevices } from '../services/CrudServices/CreateAssetComponentSevices';
 import { ValidatorServices } from '../services/Validators/FieldValidator/ValidatorServices';//new
 
 
@@ -47,11 +46,11 @@ import { ValidatorServices } from '../services/Validators/FieldValidator/Validat
   providers: [
     {
       provide: 'IListServicesToken',
-      useClass: ListServices
+      useClass: ListAssetsComponentServices
     },
     {
       provide: 'ICreateServicesToken',
-      useClass: CreateServices
+      useClass: CreateAssetComponentSevices
     },
     {
       provide: 'IValidatorServicesToken',

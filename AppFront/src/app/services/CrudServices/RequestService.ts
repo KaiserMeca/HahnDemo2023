@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AssetServiceService {
+export class RequestService {
 
   private httpOptions: any = {};
 
@@ -27,14 +27,14 @@ export class AssetServiceService {
   }
   postAsset(asset: IAsset): Observable<any> {
     this.updateHttpOptions();
-    return this.http.post(enviroment.endpoint + enviroment.myApiUrl, asset);//, this.httpOptions
+    return this.http.post(enviroment.endpoint + enviroment.myApiUrl, asset);
   }
   deleteAsset(id: string): Observable<any> {
     this.updateHttpOptions();
-    return this.http.delete(enviroment.endpoint + enviroment.myApiUrl + id);//, this.httpOptions
+    return this.http.delete(enviroment.endpoint + enviroment.myApiUrl + id);
   }
   putAsset(name: string, asset: IAsset): Observable<any> {
     this.updateHttpOptions();
-    return this.http.put(enviroment.endpoint + enviroment.myApiUrl + name, asset);//, this.httpOptions
+    return this.http.put(enviroment.endpoint + enviroment.myApiUrl + name, asset);
   }
 }

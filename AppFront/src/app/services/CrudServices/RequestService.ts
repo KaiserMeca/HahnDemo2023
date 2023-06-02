@@ -37,4 +37,8 @@ export class RequestService {
     this.updateHttpOptions();
     return this.http.put(enviroment.endpoint + enviroment.myApiUrl + name, asset);
   }
+  ValidMailSend(): Observable<any> {
+    this.updateHttpOptions();
+    return this.http.get(enviroment.endpoint + enviroment.mailApi);
+  }
 }

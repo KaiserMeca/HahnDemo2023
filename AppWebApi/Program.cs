@@ -10,11 +10,6 @@ using Domain.Assets.Models;
 using Domain.Assets.ValueObjectModels;
 using Domain.Assets.Aggregates.Events;
 using Infrastructure.EventHandlers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
 using System.Reflection;
 
 namespace AppWebApi
@@ -42,9 +37,10 @@ namespace AppWebApi
             builder.Services.AddScoped<IAssetRepository, AssetRepository>();
             builder.Services.AddScoped<IAssetService, AssetServices>();
             builder.Services.AddScoped<IDomainEventBus, DomainEventBus>();
+            builder.Services.AddScoped<IMailSendOkServices, MailSendOkServices>();
             builder.Services.AddScoped<IDomainEventHandlerFactory, DomainEventHandlerFactory>();
-            builder.Services.AddScoped<NotifyAssetAddedEventHandler>();
-            builder.Services.AddScoped<IDomainEventHandler<NotifyAssetAdded>, NotifyAssetAddedEventHandler>();
+            builder.Services.AddScoped<NotificationEmailAddedAssetEventHandler>();
+            builder.Services.AddScoped<IDomainEventHandler<NotifyAssetAdded>, NotificationEmailAddedAssetEventHandler>();
 
             //Mapper
             var mapConfig = new MapperConfiguration(m =>

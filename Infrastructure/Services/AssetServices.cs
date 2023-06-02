@@ -4,6 +4,7 @@ using Domain.Assets.Models;
 using Domain.Assets.ValueObjectModels;
 using Domain.InterfacesServices;
 using Domain.Validations;
+using Infrastructure.EventHandlers;
 
 /// <summary>
 /// Provides asset-related services
@@ -109,5 +110,14 @@ public class AssetServices : IAssetService
     public async Task<bool> DeleteAsync(Guid id)
     {
         return await _repository.DeleteAsync(id);
+    }
+
+    public async Task<bool> SendMail(string mail)
+    {
+        if (!NotificationEmailAddedAssetEventHandler.SendMail)
+        {
+            return true;
+        }
+        return false;
     }
 }

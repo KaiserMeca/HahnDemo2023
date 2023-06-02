@@ -114,5 +114,7 @@ namespace AppWebApi.Controllers
                 return Ok(new { message = "Delete Asset" });
             }
         }
+
+        
     }
 }

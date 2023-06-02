@@ -13,6 +13,7 @@ export class CreateAssetComponentSevices implements ICreateServices {
 
   constructor(private _AssetServices: RequestService) {
   }
+    
   async AddAsset(asset: IAsset): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       this._AssetServices.postAsset(asset).subscribe(data => {
@@ -32,6 +33,18 @@ export class CreateAssetComponentSevices implements ICreateServices {
     const day = purchaseDateConvert.getDate();
     const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     return formattedDate;
+  }
+
+  ValidMail() {
+    return new Promise<string>((resolve, reject) => {
+      this._AssetServices.ValidMailSend().subscribe(data => {
+        this.message = data.message;
+        resolve(this.message);
+      }, error => {
+        this.message = error.error.message;
+        reject(this.message);
+      });
+    });
   }
 
   async getDepartment(dpto: number) {

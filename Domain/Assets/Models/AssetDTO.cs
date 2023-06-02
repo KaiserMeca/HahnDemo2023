@@ -1,4 +1,5 @@
 ﻿using Domain.Assets.ValueObjectModels;
+using System.Text.Json.Serialization;
 
 namespace Domain.Assets.Models
 {
@@ -13,6 +14,7 @@ namespace Domain.Assets.Models
         public string DepartmentMail { get; set; }
         public DateTime PurchaseDate { get; set; }
         public int Lifespan { get; set; }
+        [JsonIgnore]
         public State State { get; set; }
         public RemainingLifespan RemainingLifespan { get; set; }
     }

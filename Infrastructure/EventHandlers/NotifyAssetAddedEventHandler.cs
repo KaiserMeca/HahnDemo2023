@@ -14,17 +14,18 @@ namespace Infrastructure.EventHandlers
     /// <summary>
     /// Event handler for notifying asset addition
     /// </summary>
-    public class NotifyAssetAddedEventHandler : IDomainEventHandler<NotifyAssetAdded>
+    public class NotificationEmailAddedAssetEventHandler : IDomainEventHandler<NotifyAssetAdded>
     {
         private readonly EmailConfiguration _emailConfiguration;
-        private readonly ILogger<NotifyAssetAddedEventHandler> _logger;
+        private readonly ILogger<NotificationEmailAddedAssetEventHandler> _logger;
+        public static bool SendMail = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotifyAssetAddedEventHandler"/> class
+        /// Initializes a new instance of the <see cref="NotificationEmailAddedAssetEventHandler"/> class
         /// </summary>
         /// <param name="emailConfiguration">The email configuration options</param>
         /// <param name="logger">The logger.</param>
-        public NotifyAssetAddedEventHandler(IOptions<EmailConfiguration> emailConfiguration, ILogger<NotifyAssetAddedEventHandler> logger)
+        public NotificationEmailAddedAssetEventHandler(IOptions<EmailConfiguration> emailConfiguration, ILogger<NotificationEmailAddedAssetEventHandler> logger)
         {
             _emailConfiguration = emailConfiguration.Value;
             _logger = logger;
@@ -58,6 +59,7 @@ namespace Infrastructure.EventHandlers
             }
             catch (Exception ex)
             {
+                SendMail = false;
                 _logger.LogError(ex, "An error occurred while sending the notification email.");
                 throw new EmailNotificationException("An error occurred while sending the notification email.", ex);
             }

@@ -55,7 +55,7 @@ export class CreateAssetComponent implements OnInit {
           PurchaseDate: this.createServices.FormattedDate(asset),
           LifeSpan: asset.lifespan,
         });
-        console.log(asset);
+        
       }
     });
   }
@@ -71,7 +71,6 @@ export class CreateAssetComponent implements OnInit {
       lifespan: this.register.value.LifeSpan,
       RemainingLifespan: {}
     }
-    console.log(asset);
     try {
       const message = await this.createServices.AddAsset(asset);
       this.translateService.get('SaveAsset').subscribe((translatedMessage: string) => {
@@ -80,8 +79,16 @@ export class CreateAssetComponent implements OnInit {
       this.router.navigate(["/app-assets-list"]);
     } catch (error) {
       this.toastr.error(error as string, "Error");
-      console.log(error + " aqui es");
     }
+    //Verify that there were no errors with the email 15 seconds after it was sent
+    setTimeout(async () => {
+      try {
+        const validMailResponse = await this.createServices.ValidMail();
+
+      } catch (error) {
+        this.toastr.error('Email not sent');
+      }
+    }, 15000);
     this.loading = false;
   }
 
@@ -98,7 +105,6 @@ export class CreateAssetComponent implements OnInit {
       lifespan: this.register.value.LifeSpan,
       RemainingLifespan: {}
     }
-    console.log(this.IdForEdit);
 
     this._AssetServices.putAsset(this.IdForEdit, asset).subscribe(data => {
       this.toastr.info(data.message);

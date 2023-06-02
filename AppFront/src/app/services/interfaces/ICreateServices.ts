@@ -5,4 +5,5 @@ export interface ICreateServices {
   getDepartment(dpto: number): any;
   AddAsset(asset: IAsset): any;
   FormattedDate(asset: IAsset): any;
+  ValidMail(): any;
 }

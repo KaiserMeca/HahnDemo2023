@@ -41,5 +41,7 @@ namespace Domain.InterfacesServices
         /// <param name="id">The ID of the asset to delete</param>
         /// <returns>A task that represents the asynchronous operation and returns true if the asset was deleted successfully, or false otherwise</returns>
         Task<bool> DeleteAsync(Guid id);
+
+        Task<bool> SendMail(string mail);
     }
 }
